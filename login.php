@@ -25,7 +25,15 @@
     </div>
 </nav>
 
-<h2>Connecter vous Ã  votre compte :</h2>
+<h2>Connectez vous à votre compte :</h2>
+
+<?php 
+if (isset($_GET["errorCode"])) { ?>
+<div class="alert alert-danger" role="alert">
+  A simple danger alert—check it out!
+</div>
+<?php }
+?> 
 
 <form method="post" action="c_login.php">
 

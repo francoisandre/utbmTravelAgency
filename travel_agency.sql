@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `accommodations`
 --
-
+DROP TABLE IF EXISTS `accommodations`;
 CREATE TABLE `accommodations` (
   `accommodation_id` int(11) NOT NULL,
   `package_id` int(11) DEFAULT NULL,

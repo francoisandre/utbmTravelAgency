@@ -1,5 +1,5 @@
 <html lang="fr">
-<?php include '../head.php' ?>
+<?php include __DIR__.'/common/header.php' ?>
 
 <body>
 <div class="container-fluid">

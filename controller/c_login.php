@@ -1,13 +1,19 @@
 <?php
+include_once __DIR__.'/../view/common/session.php';
 
-include_once './db/dbConnection.php';
+include_once __DIR__.'/../db/dbConnection.php';
 
 // On vérifie que les infos ont été fournies
-if (!isset($_POST["email"]))
-    return;
-if (!isset($_POST["passwd"]))
-    return;
-
+if (!isset($_POST["email"])) {
+$_GET['errorMessage']="Le mél est obligatoire";
+include __DIR__.'/../view/login.php';
+exit();
+}
+if (!isset($_POST["passwd"])) {
+    $_GET['errorMessage']="Le mot de passe est obligatoire";
+    include __DIR__.'/../view/login.php';
+    exit();
+}
 $email = $_POST["email"];
 $password = $_POST["passwd"];
 
@@ -23,16 +29,14 @@ $req->execute([$email]);
 // Récupération de l'éventuel résultat
 $data = $req->fetch();
 
-if($data != null && password_verify($password, $data['passwd'])) {
+if($data != null && password_verify($password, $data['password'])) {
     // C'est OK, on connecte l'utilisateur
-    session_start();
     $_SESSION["email"] = $email;
 
-    // On le redirige sur son compte
-    header("Location: ../view/account.php"); // A FAIRE PAS ENCORE DISPO
+    include __DIR__.'/../view/dashboard.php';
 } else {
-    // Erreur, utilisateur introuvable, on redirige vers le login
-    $_GET['errorCode']="UNKNOWN_CODE";
-    include './login.php';
-    //header("Location: login.php?error=LoginError"); // le view login.php et non le controller c_login.php
+    $_GET['errorMessage']="Erreur d'indentifiants";
+    include __DIR__.'/../view/login.php';
 }
+
+?>

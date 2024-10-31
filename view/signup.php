@@ -1,25 +1,34 @@
+<?php 
+include_once __DIR__.'/common/session.php';
+if (isset($_SESSION['email'])){
+    include __DIR__.'/dashboard.php';
+    exit();
+}
+ 
+include_once __DIR__.'/../util/pathUtils.php';
+?>
 <html>
 <?php 
-include 'common/header.php' 
+include_once __DIR__.'/common/header.php' 
 ?>
 <?php 
 $currentActiveMenu = "signup";
-include 'common/menu.php' ?>
-
+include_once 'common/menu.php' ?>
+<div class="container mt-4">
 <h2>Veuillez-vous inscrire : </h2>
-<form method="post" action="../controller/c_signup.php">
+<form method="post" action="<?php echo getBaseUrl()?>controller/c_signup.php">
 
-    <label for="First_name"  >Prénom :</label>
-    <input id="First_name" class="form-control" name="First_name" type="text" required="required" placeholder="Antoine" /><br/>
+    <label for="firstName"  >Prénom :</label>
+    <input id="firstName" class="form-control" name="firstName" type="text" required="required" placeholder="Antoine" /><br/>
 
-    <label for="Name"  >Nom :</label>
-    <input id="name" class="form-control" name="name" type="text" required="required" placeholder="Dupont" /><br/>
+    <label for="lastName"  >Nom :</label>
+    <input id="lastName" class="form-control" name="lastName" type="text" required="required" placeholder="Dupont" /><br/>
 
     <label for="phone"  >Téléphone  :</label>
     <input id="phone" class="form-control" name="phone" type="tel" required="required" placeholder="+33 6 12 34 56 78" /><br/>
 
-    <label for="mail"  >Email :</label>
-    <input id="mail" class="form-control" name="Email" type="text" required="required" placeholder="email@domain.com" /><br/>
+    <label for="email"  >Email :</label>
+    <input id="email" class="form-control" name="email" type="text" required="required" placeholder="email@domain.com" /><br/>
 
     <label for="passwd">Mot de passe :</label>
     <input id="passwd"  class="form-control" name="passwd" type="password" required="required" placeholder="Entrez votre mot de passe" /><br/>
@@ -32,9 +41,9 @@ include 'common/menu.php' ?>
     </div>
 
 </form>
-
+</div>
 <?php 
-include 'common/footer.php' 
+include_once __DIR__.'/common/footer.php' 
 ?>
 </body>
 </html>

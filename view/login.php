@@ -1,26 +1,28 @@
+<?php 
+include_once __DIR__.'/common/session.php'; 
+if (isset($_SESSION['email'])){
+    include __DIR__.'/dashboard.php';
+    exit();
+}
+
+include_once __DIR__.'/../util/pathUtils.php';
+
+?>
 <html lang="fr">
 <?php 
-include 'common/header.php' 
+include_once __DIR__.'/common/header.php'; 
 ?>
 <body>
 <?php 
 $currentActiveMenu = "login";
-include 'common/menu.php' 
+include_once __DIR__.'/common/menu.php' ;
 ?>
-
+<div class="container mt-4">
 <h2>Connectez vous à votre compte :</h2>
 
-<?php 
-if (isset($_GET["errorCode"])) { ?>
-<div class="alert alert-danger" role="alert">
-   Erreur lors de la connexion veuilez réessayer.
-</div>
-<?php }
-?> 
+<form method="post" action="<?php echo getBaseUrl()?>controller/c_login.php">
 
-<form method="post" action="c_login.php">
-
-    <label for="mail"  >Email :</label>
+    <label for="email"  >Email :</label>
     <input id="email" class="form-control" name="email" type="text" required="required" placeholder="email@domain.com" /><br/>
 
     <label for="passwd">Mot de passe :</label>
@@ -30,9 +32,9 @@ if (isset($_GET["errorCode"])) { ?>
         <button class="btn btn-primary" type="submit">Se connecter</button>
     </div>
 </form>
-
+</div>
 <?php 
-include 'common/footer.php' 
+include_once __DIR__.'/common/footer.php' 
 ?>
 </body>
 </html>

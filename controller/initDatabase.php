@@ -3,11 +3,11 @@
 
 try {
     
-include "db/dbConnection.php";
+    include_once __DIR__.'/../db/dbConnection.php';
 
     $pdo = getDatabase();
 
-    $sqlFile = 'sql/travel_agency.sql';
+    $sqlFile = '../sql/travel_agency.sql';
     $sql = file_get_contents($sqlFile);
     $statements = explode(";", $sql); 
 

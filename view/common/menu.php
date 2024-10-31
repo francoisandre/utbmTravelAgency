@@ -8,10 +8,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($currentActiveMenu != 'signup') echo 'active'; ?> " aria-current="page" href="signup.php">S'inscrire</a>
+                    <a class="nav-link <?php if ($currentActiveMenu != 'signup') echo 'active'; ?> " aria-current="page" href="./signup.php">S'inscrire</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="login.php">Se connecter</a>
+                    <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="./login.php">Se connecter</a>
                 </li>
             </ul>
         </div>

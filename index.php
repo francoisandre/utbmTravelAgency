@@ -1,3 +1,3 @@
 <?php
-include './view/login.php'
+header("Location: view/login.php");
 ?>

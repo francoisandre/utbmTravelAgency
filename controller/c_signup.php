@@ -1,6 +1,6 @@
 <?php
 
-include_once 'db/dbConnection.php';
+include_once '../db/dbConnection.php';
 
 // On vérifie que les infos ont été fournies
 if(!isset($_POST["Email"]))
@@ -23,10 +23,8 @@ $First_name = $_POST["First_name"];
 $name = $_POST["name"];
 $phone = $_POST["phone"];
 
-
 // Connexion à la base de données
 $db = getDatabase();
-
 
 // Préparation de la requête
 $req = $db->prepare("INSERT INTO users (password, email) VALUES (?, ?)"); // A VERIFIER SELON NOM DE LA BDD

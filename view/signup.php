@@ -7,7 +7,7 @@ $currentActiveMenu = "signup";
 include 'common/menu.php' ?>
 
 <h2>Veuillez-vous inscrire : </h2>
-<form method="post" action="c_signup.php">
+<form method="post" action="../controller/c_signup.php">
 
     <label for="First_name"  >Prénom :</label>
     <input id="First_name" class="form-control" name="First_name" type="text" required="required" placeholder="Antoine" /><br/>

@@ -1,6 +1,6 @@
 <?php
 
-include_once 'db/dbConnection.php';
+include_once './db/dbConnection.php';
 
 // On vérifie que les infos ont été fournies
 if (!isset($_POST["email"]))

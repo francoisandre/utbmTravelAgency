@@ -8,7 +8,7 @@ if(!isset($_POST["passwd"]))
 if(!isset($_POST["First_name"]))
     return;
 
-if(!isset($_POST["name"]))
+if(!isset($_POST["name"])) 
     return;
 
 if(!isset($_POST["phone"]))

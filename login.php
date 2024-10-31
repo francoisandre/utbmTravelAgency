@@ -30,7 +30,7 @@
 <?php 
 if (isset($_GET["errorCode"])) { ?>
 <div class="alert alert-danger" role="alert">
-  A simple danger alert—check it out!
+ Erreur lors de la connexion veuilez réessayer.
 </div>
 <?php }
 ?> 

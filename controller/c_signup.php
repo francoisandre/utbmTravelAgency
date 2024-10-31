@@ -1,4 +1,7 @@
 <?php
+
+include_once 'db/dbConnection.php';
+
 // On vérifie que les infos ont été fournies
 if(!isset($_POST["Email"]))
     return;
@@ -22,7 +25,7 @@ $phone = $_POST["phone"];
 
 
 // Connexion à la base de données
-$db = new PDO("mysql:host=localhost;dbname=travel_agency_management_system;charset=utf8", "root", "");
+$db = getDatabase();
 
 
 // Préparation de la requête

@@ -18,15 +18,24 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `travel_agency_management_system`
---
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `accommodations`
 --
+
+DROP TABLE IF EXISTS `payments`;
 DROP TABLE IF EXISTS `accommodations`;
+DROP TABLE IF EXISTS `feedback`;
+DROP TABLE IF EXISTS `reservations`;
+DROP TABLE IF EXISTS `transportation`;
+DROP TABLE IF EXISTS `travelpackages`;
+DROP TABLE IF EXISTS `clients`;
+DROP TABLE IF EXISTS `loyaltyprograms`;
+DROP TABLE IF EXISTS `users`;
+
+
 CREATE TABLE `accommodations` (
   `accommodation_id` int(11) NOT NULL,
   `package_id` int(11) DEFAULT NULL,
@@ -148,6 +157,7 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `isStaff` BOOLEAN DEFAULT 0,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

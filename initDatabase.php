@@ -1,22 +1,27 @@
 <?php
-// Connexion à la base de données
-$conn = new mysqli('localhost', 'utbmTravelAgency', 'utbm', 'utbmTravelAgency');
 
-// Vérification de la connexion
-if ($conn->connect_error) {
-    die("Connexion échouée : " . $conn->connect_error);
-}
 
-// Charger le script SQL depuis un fichier
-$sql = file_get_contents('sql/travel_agency.sql');
+try {
+    
+include "db/dbConnection.php";
 
-// Exécuter le script SQL
-if ($conn->multi_query($sql)) {
+    $pdo = getDatabase();
+
+    $sqlFile = 'sql/travel_agency.sql';
+    $sql = file_get_contents($sqlFile);
+    $statements = explode(";", $sql); 
+
+    foreach ($statements as $statement) {
+        $statement = trim($statement);
+        if (!empty($statement)) {
+            $pdo->exec($statement); 
+        }
+    }
+
     echo "Script SQL exécuté avec succès.";
-} else {
-    echo "Erreur lors de l'exécution du script : " . $conn->error;
+
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
 }
 
-// Fermer la connexion
-$conn->close();
 ?>

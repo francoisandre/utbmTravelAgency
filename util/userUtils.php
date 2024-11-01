@@ -1,6 +1,7 @@
 <?php 
 include_once __DIR__."/../db/dbConnection.php";
 include_once __DIR__."/loyaltyProgramUtils.php";
+include_once __DIR__."/reservationUtils.php";
 
 function hasUserByEmail($email) {
     $db = getDatabase();

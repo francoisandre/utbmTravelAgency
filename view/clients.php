@@ -26,6 +26,7 @@ include_once __DIR__.'/common/menu.php' ;
       <th scope="col">Nom</th>
       <th scope="col">Email</th>
       <th scope="col">Programme de fidélité</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -37,12 +38,23 @@ include_once __DIR__.'/common/menu.php' ;
       <td>".$client["last_name"]."</td>
       <td>".$client["email"]."</td>
       <td>".$client["program_name"]."</td>
+ <td>
+            <a href='".getBaseUrl()."controller/client/c_deleteClient.php?email=".$client["email"]."' onclick='return confirmDelete();' style='cursor:pointer'>
+                <i class='material-icons' style='color: red;'>delete</i>
+            </a>
+        </td>
     </tr>";
   }
   ?>
    
   </tbody>
 </table>
+
+<script>
+function confirmDelete() {
+    return confirm("Do you confirm this action ?");
+}
+</script>
 
 <form method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">
     <div class="col-12">

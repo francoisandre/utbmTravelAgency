@@ -15,6 +15,22 @@ function hasUserByEmail($email) {
     }
 }
 
+function deleteUser($email)  {
+    if (hasUserByEmail($email)) {
+        $db = getDatabase();
+        $req = $db->prepare("SELECT * FROM users WHERE email = ?");
+        $req->execute([$email]);
+        $data = $req->fetch();
+        $userId = $data['user_id'];
+
+        $req = $db->prepare("DELETE FROM clients WHERE user_id = ?");
+        $req->execute([$userId]);
+
+        $req = $db->prepare("DELETE FROM users WHERE user_id = ?");
+        $req->execute([$userId]);
+    }
+}
+
 function getCurrentUserName() {
     if (!isLogged()) {
         return "";

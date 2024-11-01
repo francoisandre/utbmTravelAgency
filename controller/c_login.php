@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__.'/../view/common/session.php';
-
 include_once __DIR__.'/../db/dbConnection.php';
+
 
 // On vérifie que les infos ont été fournies
 if (!isset($_POST["email"])) {

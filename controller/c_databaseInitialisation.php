@@ -4,6 +4,7 @@
 try {
     
     include_once __DIR__.'/../db/dbConnection.php';
+    include_once __DIR__.'/../util/userUtils.php';
 
     $pdo = getDatabase();
 
@@ -19,6 +20,10 @@ try {
     }
 
     echo "Script SQL exécuté avec succès.";
+
+    createUser("francois.andre.perso@gmail.com", "toto", "Francois", "ANDRE", "0622422400", true);
+    
+    echo "Administrateurs ajoutés avec succès.";
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();

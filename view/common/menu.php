@@ -1,5 +1,6 @@
 <?php 
 include_once __DIR__.'/../../util/pathUtils.php';
+include_once __DIR__.'/../../util/userUtils.php';
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #001f3f;">
 
@@ -11,7 +12,7 @@ include_once __DIR__.'/../../util/pathUtils.php';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <?php if (!isset($_SESSION['email'])){ ?>  
+                <?php if (!isLogged()): ?>  
 
                 <li class="nav-item">
                     <a class="nav-link <?php if ($currentActiveMenu != 'signup') echo 'active'; ?> " aria-current="page" href="<?php echo getBaseUrl()?>view/signup.php">S'inscrire</a>
@@ -19,11 +20,20 @@ include_once __DIR__.'/../../util/pathUtils.php';
                 <li class="nav-item">
                     <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/login.php">Se connecter</a>
                 </li>
-                <?php } else { ?>
+                <?php  else:  ?>
+                    <?php if (isAdmin()): ?> 
+                        <li class="nav-item">
+                        <a class="nav-link <?php if ($currentActiveMenu != 'clients') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/clients.php">Clients</a>
+                    </li>
+                        <li class="nav-item">
+                        <a class="nav-link <?php if ($currentActiveMenu != 'accomodations') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/accomodations.php">Hébergements</a>
+                    </li>
+                    <?php endif; ?>
+
                     <li class="nav-item">
                     <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>controller/c_logout.php">Se déconnecter</a>
                 </li>
-                    <?php } ?>
+                    <?php endif; ?>
             </ul>
         </div>
     </div>

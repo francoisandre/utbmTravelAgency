@@ -1,11 +1,10 @@
 <?php 
 include_once __DIR__.'/common/session.php';
-if (isset($_SESSION['email'])){
-    include __DIR__.'/dashboard.php';
-    exit();
-}
- 
 include_once __DIR__.'/../util/pathUtils.php';
+include_once __DIR__.'/../util/userUtils.php';
+
+goToDashboardIfConnected();
+ 
 ?>
 <html>
 <?php 

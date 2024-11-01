@@ -1,11 +1,7 @@
 <?php 
 include_once __DIR__.'/common/session.php';
-include_once __DIR__.'/../db/userUtils.php';
-if (!isset($_SESSION['email'])){
-    $_GET['errorMessage']="Veuillez vous connecter";
-    include_once __DIR__.'/login.php';
-    exit();
-}
+include_once __DIR__.'/../util/userUtils.php';
+goToLoginIfNotConnected();
 ?>
 <html lang="fr">
 <?php 

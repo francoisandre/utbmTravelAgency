@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__.'/../view/common/session.php';
 include_once __DIR__.'/../db/dbConnection.php';
-include_once __DIR__.'/../db/userUtils.php';
+include_once __DIR__.'/../util/userUtils.php';
 // On vérifie que les infos ont été fournies
 if(!isset($_POST["email"])) {
     $_GET['errorMessage']="Le mél est obligatoire";
@@ -33,8 +33,8 @@ if(!isset($_POST["phone"])) {
 $email = $_POST["email"];
 $password = $_POST["passwd"];
 $firstName = $_POST["firstName"];
-$name = $_POST["lastName"];
-$phone = $_POST["phone"];
+$lastNname = $_POST["lastName"];
+$phoneNumber = $_POST["phone"];
 
 
 $db = getDatabase();
@@ -45,16 +45,7 @@ if (hasUserByEmail($email)) {
     exit();
 } else {
 
-$req = $db->prepare("INSERT INTO users (password, email) VALUES (?, ?)"); 
-$req->execute([password_hash($password, PASSWORD_DEFAULT), $email]);
-
-$req = $db->prepare("SELECT user_id FROM users WHERE email = ?");
-$req->execute([$email]);
-$data = $req->fetch();
-$user_id = $data['user_id'];
-
-$req2 = $db->prepare("INSERT INTO clients (user_id,first_name, last_name,phone_number) VALUES (?, ?, ?,?)");
-$req2->execute([$user_id, $firstName, $name,$phone]);
+    createUser($email, $password, $firstName, $lastNname, $phoneNumber, false)
 
 $_GET['successMessage']="Votre compte a été créé";
 $_SESSION["email"] = $email;

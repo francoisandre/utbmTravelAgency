@@ -18,7 +18,29 @@ include_once __DIR__.'/common/menu.php' ;
 <div class="container mt-4">
 <h2>Liste des clients :</h2>
 
-<?php  echo print_r(getClients()); ?>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+<?php
+  foreach (getClients() as $index => $client) {
+    echo "<tr>
+      <th scope='row'>".($index+1)."</th>
+      <td>".$client["first_name"]."</td>
+      <td>".$client["last_name"]."</td>
+      <td>".$client["email"]."</td>
+    </tr>";
+  }
+  ?>
+   
+  </tbody>
+</table>
 
 <form method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">
     <div class="col-12">

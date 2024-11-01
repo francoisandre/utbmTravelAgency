@@ -16,7 +16,7 @@ include_once __DIR__.'/common/menu.php'
 <h2>Dashboard :</h2>
 
 <div class="jumbotron">
-  <h1 class="display-4">Bienvenue <?php echo getUserNameByEmail($_SESSION['email']) ?> !</h1>
+  <h1 class="display-4">Bienvenue <?php echo getCurrentUserName() ?> !</h1>
 </div>
 </div>
 <?php 

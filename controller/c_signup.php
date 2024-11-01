@@ -45,7 +45,7 @@ if (hasUserByEmail($email)) {
     exit();
 } else {
 
-    createUser($email, $password, $firstName, $lastNname, $phoneNumber, false)
+    createUser($email, $password, $firstName, $lastNname, $phoneNumber, false);
 
 $_GET['successMessage']="Votre compte a été créé";
 $_SESSION["email"] = $email;

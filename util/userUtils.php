@@ -14,6 +14,13 @@ function hasUserByEmail($email) {
     }
 }
 
+function getCurrentUserName() {
+    if (!isLogged()) {
+        return "";
+    } else
+    return getUserNameByEmail($_SESSION['email']);
+}
+
 function getUserNameByEmail($email) {
     $db = getDatabase();
     $req = $db->prepare("select first_name, last_name from clients, users where clients.user_id=users.user_id and email = ?");

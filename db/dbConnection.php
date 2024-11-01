@@ -3,7 +3,7 @@
 
 function getDatabase() {
 
-   $config = parse_ini_file('../config.ini', true);
+   $config = parse_ini_file(__DIR__.'/../config.ini', true);
 
    $dbHost = $config['database']['host'];
    $dbUsername = $config['database']['username'];

@@ -22,6 +22,22 @@ function getUserNameByEmail($email) {
     return $data['first_name']." ".$data['last_name'];
 }
 
+function getClients() {
+    $db = getDatabase();
+    $req = $db->prepare("select first_name, last_name, email from clients, users where clients.user_id=users.user_id and isStaff= 0");
+    $req->execute();
+    $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
+}
+
+function getAdmins() {
+    $db = getDatabase();
+    $req = $db->prepare("select first_name, last_name, email from clients, users where clients.user_id=users.user_id and isStaff= 1");
+    $req->execute();
+    $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
+}
+
 function isAdmin() {
     if (!isLogged()) {
         return false;
@@ -32,14 +48,22 @@ function isAdmin() {
         $req = $db->prepare("SELECT * FROM users WHERE email = ?");
         $req->execute([$email]);
         $data = $req->fetch();
-        return $data['isStaff'];
+        return $data['isStaff']==1;
+    }
+}
+
+function booleanToInt($value) {
+    if ($value == true) {
+        return 1;
+    } else {
+        return 0;
     }
 }
 
 function createUser($email, $password, $firstName, $lastName, $phoneNumber, $isStaff) {
     $db = getDatabase();
     $req = $db->prepare("INSERT INTO users (password, email, isStaff) VALUES (?, ?, ?)"); 
-    $req->execute([password_hash($password, PASSWORD_DEFAULT), $email, $isStaff]);
+    $req->execute([password_hash($password, PASSWORD_DEFAULT), $email, booleanToInt($isStaff)]);
 
     $req = $db->prepare("SELECT user_id FROM users WHERE email = ?");
     $req->execute([$email]);

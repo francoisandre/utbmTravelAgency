@@ -18,8 +18,6 @@ include_once __DIR__.'/common/menu.php' ;
 <div class="container mt-4">
 <h2>Liste des clients :</h2>
 
-<?php  echo print_r(getClients()); ?>
-
 <form method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Créer des clients fictifs</button>

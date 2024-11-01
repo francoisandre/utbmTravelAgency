@@ -1,5 +1,6 @@
 <?php 
 include_once __DIR__."/../db/dbConnection.php";
+include_once __DIR__."/loyaltyProgramUtils.php";
 
 function hasUserByEmail($email) {
     $db = getDatabase();
@@ -17,21 +18,27 @@ function hasUserByEmail($email) {
 function getCurrentUserName() {
     if (!isLogged()) {
         return "";
-    } else
-    return getUserNameByEmail($_SESSION['email']);
+    } else {
+    $user = getCurrentUser();
+    return $user['first_name']." ".$user['last_name'];
+    }
 }
 
-function getUserNameByEmail($email) {
-    $db = getDatabase();
-    $req = $db->prepare("select first_name, last_name from clients, users where clients.user_id=users.user_id and email = ?");
-    $req->execute([$email]);
-    $data = $req->fetch();
-    return $data['first_name']." ".$data['last_name'];
+function getCurrentUser() {
+    if (!isLogged()) {
+        return null;
+    } else {
+        $db = getDatabase();
+        $req = $db->prepare("select * from clients, users, loyaltyprograms where clients.user_id=users.user_id and email = ? and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id");
+        $req->execute([$_SESSION['email']]);
+        $data = $req->fetch(PDO::FETCH_ASSOC);
+        return $data;
+    }
 }
 
 function getClients() {
     $db = getDatabase();
-    $req = $db->prepare("select first_name, last_name, email from clients, users where clients.user_id=users.user_id and isStaff= 0");
+    $req = $db->prepare("select first_name, last_name, email, program_name from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id");
     $req->execute();
     $data = $req->fetchAll(PDO::FETCH_ASSOC);
     return $data;
@@ -76,9 +83,9 @@ function createUser($email, $password, $firstName, $lastName, $phoneNumber, $isS
     $req->execute([$email]);
     $data = $req->fetch();
     $user_id = $data['user_id'];
-
-    $req = $db->prepare("INSERT INTO clients (user_id,first_name, last_name,phone_number) VALUES (?, ?, ?,?)");
-    $req->execute([$user_id, $firstName, $lastName,$phoneNumber]);
+    $loyalty_program_id = getLoyaltyProgramIdFromTripNumber(0);
+    $req = $db->prepare("INSERT INTO clients (user_id,first_name, last_name,phone_number, loyalty_program_id) VALUES (?, ?, ?,?, ?)");
+    $req->execute([$user_id, $firstName, $lastName,$phoneNumber, $loyalty_program_id]);
 }
 
 function isLogged() {

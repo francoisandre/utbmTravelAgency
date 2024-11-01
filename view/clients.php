@@ -25,6 +25,7 @@ include_once __DIR__.'/common/menu.php' ;
       <th scope="col">Prénom</th>
       <th scope="col">Nom</th>
       <th scope="col">Email</th>
+      <th scope="col">Programme de fidélité</th>
     </tr>
   </thead>
   <tbody>
@@ -35,6 +36,7 @@ include_once __DIR__.'/common/menu.php' ;
       <td>".$client["first_name"]."</td>
       <td>".$client["last_name"]."</td>
       <td>".$client["email"]."</td>
+      <td>".$client["program_name"]."</td>
     </tr>";
   }
   ?>

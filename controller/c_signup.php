@@ -33,7 +33,7 @@ if(!isset($_POST["phone"])) {
 $email = $_POST["email"];
 $password = $_POST["passwd"];
 $firstName = $_POST["firstName"];
-$lastNname = $_POST["lastName"];
+$lastName = $_POST["lastName"];
 $phoneNumber = $_POST["phone"];
 
 
@@ -45,7 +45,7 @@ if (hasUserByEmail($email)) {
     exit();
 } else {
 
-    createUser($email, $password, $firstName, $lastNname, $phoneNumber, false);
+    createUser($email, $password, $firstName, $lastName, $phoneNumber, false);
 
 $_GET['successMessage']="Votre compte a été créé";
 $_SESSION["email"] = $email;

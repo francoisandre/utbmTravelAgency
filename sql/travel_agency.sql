@@ -87,7 +87,9 @@ CREATE TABLE `feedback` (
 CREATE TABLE `loyaltyprograms` (
   `loyalty_program_id` int(11) NOT NULL,
   `program_name` varchar(100) NOT NULL,
-  `discount_percentage` decimal(5,2) NOT NULL
+  `discount_percentage` decimal(5,2) NOT NULL,
+  `required_trip_number` int(8) NOT NULL,
+  `color_code` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

@@ -18,7 +18,7 @@
                     <a class="nav-link active" aria-current="page" href="account.php">My account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="c_signout.php">Logging off</a> // a faire
+                    <a class="nav-link" href="controller/c_logout.php">Logging off</a> 
                 </li>
             </ul>
         </div>

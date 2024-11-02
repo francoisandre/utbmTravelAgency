@@ -6,7 +6,7 @@ include_once __DIR__.'/../util/userUtils.php';
 goToLoginIfNotAdmin();
 
 ?>
-<html lang="fr">
+<html lang="en">
 <?php 
 include_once __DIR__.'/common/header.php'; 
 ?>
@@ -16,7 +16,7 @@ $currentActiveMenu = "clients";
 include_once __DIR__.'/common/menu.php' ;
 ?>
 <div class="container mt-4">
-<h2>Liste des clients :</h2>
+<h2>Client List :</h2>
 
 <table class="table">
   <thead>
@@ -58,7 +58,7 @@ function confirmDelete() {
 
 <form method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">
     <div class="col-12">
-        <button class="btn btn-primary" type="submit">Créer des clients fictifs</button>
+        <button class="btn btn-primary" type="submit">Add Fake Clients</button>
     </div>
 </form>
 

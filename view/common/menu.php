@@ -15,10 +15,10 @@ include_once __DIR__.'/../../util/userUtils.php';
                 <?php if (!isLogged()): ?>  
 
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($currentActiveMenu != 'signup') echo 'active'; ?> " aria-current="page" href="<?php echo getBaseUrl()?>view/signup.php">S'inscrire</a>
+                    <a class="nav-link <?php if ($currentActiveMenu != 'signup') echo 'active'; ?> " aria-current="page" href="<?php echo getBaseUrl()?>view/signup.php">Sign up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/login.php">Se connecter</a>
+                    <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/login.php">Log In</a>
                 </li>
                 <?php  else:  ?>
                     <?php if (isAdmin()): ?> 
@@ -26,12 +26,12 @@ include_once __DIR__.'/../../util/userUtils.php';
                         <a class="nav-link <?php if ($currentActiveMenu != 'clients') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/clients.php">Clients</a>
                     </li>
                         <li class="nav-item">
-                        <a class="nav-link <?php if ($currentActiveMenu != 'accomodations') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/accomodations.php">Hébergements</a>
+                        <a class="nav-link <?php if ($currentActiveMenu != 'accomodations') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/accomodations.php">Accommodations</a>
                     </li>
                     <?php endif; ?>
 
                     <li class="nav-item">
-                    <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>controller/c_logout.php">Se déconnecter</a>
+                    <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>controller/c_logout.php">Log Out</a>
                 </li>
                     <?php endif; ?>
             </ul>

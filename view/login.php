@@ -6,7 +6,7 @@ include_once __DIR__.'/../util/userUtils.php';
 goToDashboardIfConnected();
 
 ?>
-<html lang="fr">
+<html lang="en">
 <?php 
 include_once __DIR__.'/common/header.php'; 
 ?>
@@ -16,7 +16,7 @@ $currentActiveMenu = "login";
 include_once __DIR__.'/common/menu.php' ;
 ?>
 <div class="container mt-4">
-<h2>Connectez vous à votre compte :</h2>
+<h2>Log in to your account:</h2>
 
 <form method="post" action="<?php echo getBaseUrl()?>controller/c_login.php">
 
@@ -24,10 +24,10 @@ include_once __DIR__.'/common/menu.php' ;
     <input id="email" class="form-control" name="email" type="text" required="required" placeholder="email@domain.com" /><br/>
 
     <label for="passwd">Mot de passe :</label>
-    <input id="passwd"  class="form-control" name="passwd" type="password" required="required" placeholder="Entrez votre mot de passe" /><br/>
+    <input id="passwd"  class="form-control" name="passwd" type="password" required="required" placeholder="Enter your password" /><br/>
 
     <div class="col-12">
-        <button class="btn btn-primary" type="submit">Se connecter</button>
+        <button class="btn btn-primary" type="submit">Log in</button>
     </div>
 </form>
 </div>

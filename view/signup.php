@@ -30,7 +30,7 @@ include_once 'common/menu.php' ?>
     <input id="email" class="form-control" name="email" type="text" required="required" placeholder="email@domain.com" /><br/>
 
     <label for="passwd"> Password :</label>
-    <input id="passwd"  class="form-control" name="passwd" type="password" required="required" placeholder="Entrez votre mot de passe" /><br/>
+    <input id="passwd"  class="form-control" name="passwd" type="password" required="required" placeholder="Please enter your password" /><br/>
 
 <!--   PAS UTILE  <label for="BD">Date de naissance:</label>-->
 <!--    <input id="BD"  class="form-control" name="birth_date" type="date" value="bd" /><br/><br/>-->

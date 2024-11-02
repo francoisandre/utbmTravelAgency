@@ -3,6 +3,12 @@ include_once __DIR__."/../db/dbConnection.php";
 include_once __DIR__."/loyaltyProgramUtils.php";
 include_once __DIR__."/reservationUtils.php";
 
+function getPastTrips($clientId) {
+    $db = getDatabase();
+    $req = $db->prepare("SELECT reservation_date FROM reservations WHERE client_id = ? AND reservation_date < NOW()");
+    $req->execute([$clientId]);
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
 function hasUserByEmail($email) {
     $db = getDatabase();
     $req = $db->prepare("SELECT COUNT(*) AS TOTAL FROM users WHERE email = ?");
@@ -58,6 +64,17 @@ function getClients() {
     $req = $db->prepare("select first_name, last_name, email, program_name from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id");
     $req->execute();
     $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
+}
+
+function getClientByEmail($email) {
+    $db = getDatabase();
+    $req = $db->prepare("select first_name, last_name, email, program_name, client_id from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id and email = ?");
+    $req->execute([$email]);
+    $data = $req->fetch(PDO::FETCH_ASSOC);
+    if ($data == false) {
+        return null;
+    }
     return $data;
 }
 
@@ -131,5 +148,4 @@ function goToDashboardIfConnected() {
         exit();
     }
 }
-
 ?>

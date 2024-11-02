@@ -5,12 +5,12 @@ include_once __DIR__.'/../db/dbConnection.php';
 
 // On vérifie que les infos ont été fournies
 if (!isset($_POST["email"])) {
-$_GET['errorMessage']="Le mél est obligatoire";
+$_GET['errorMessage']="Email is mandatory";
 include __DIR__.'/../view/login.php';
 exit();
 }
 if (!isset($_POST["passwd"])) {
-    $_GET['errorMessage']="Le mot de passe est obligatoire";
+    $_GET['errorMessage']="Password is mandatory";
     include __DIR__.'/../view/login.php';
     exit();
 }

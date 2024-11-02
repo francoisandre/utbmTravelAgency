@@ -42,6 +42,8 @@ include_once __DIR__.'/common/menu.php' ;
             <a href='".getBaseUrl()."controller/client/c_deleteClient.php?email=".$client["email"]."' onclick='return confirmDelete();' style='cursor:pointer'>
                 <i class='material-icons' style='color: red;'>delete</i>
             </a>
+           <button  type='button' onclick='addFakeReservation(\"".$client["email"]."\")' class='btn btn-primary btn-sm' >Add fake reservations</button>
+            
         </td>
     </tr>";
   }
@@ -54,6 +56,12 @@ include_once __DIR__.'/common/menu.php' ;
 function confirmDelete() {
     return confirm("Do you confirm this action ?");
 }
+
+function addFakeReservation(email) {
+  window.location.href = "<?php echo getBaseUrl()?>controller/fake/c_fakeReservations.php?email="+email;
+
+}
+
 </script>
 
 <form method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">

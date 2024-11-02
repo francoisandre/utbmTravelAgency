@@ -6,17 +6,17 @@ include_once __DIR__.'/../util/userUtils.php';
 goToLoginIfNotAdmin();
 
 ?>
-<html lang="fr">
+<html lang="en">
 <?php 
 include_once __DIR__.'/common/header.php'; 
 ?>
 <body>
 <?php 
-$currentActiveMenu = "accomodations";
+$currentActiveMenu = "accommodations";
 include_once __DIR__.'/common/menu.php' ;
 ?>
 <div class="container mt-4">
-<h2>Liste des hébergements :</h2>
+<h2>Accommodations List :</h2>
 
 
 </div>

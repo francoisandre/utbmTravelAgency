@@ -1,6 +1,7 @@
 <?php 
 include_once __DIR__.'/common/session.php';
 include_once __DIR__.'/../util/userUtils.php';
+include_once __DIR__.'/../util/reservationUtils.php';
 goToLoginIfNotConnected();
 ?>
 <html lang="en">
@@ -28,6 +29,45 @@ include_once __DIR__.'/common/menu.php'
   }
    ?></h5>
 </div>
+
+
+<h4 class="mt-3"> Previous reservations </h4>
+
+<?php 
+$previousReservations = getCurrentUserPreviousReservations();
+
+//$allReservations = getCurrentUserReservations();
+
+if (count($previousReservations)==0) {
+  echo "No planned reservations";
+} else {
+
+  ?>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <?php
+
+  //print_r($allReservations);
+
+  foreach ($previousReservations as $index => $reservation) {
+    echo("<tr><td>".($index+1)."</td><td>".explode(" ",$reservation['reservation_date'])[0]."</td></tr>");
+  }
+  ?>
+</tbody>
+</table>
+<?php
+
+}
+?>
+
 </div>
 
 

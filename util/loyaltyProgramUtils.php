@@ -44,7 +44,7 @@ function getCurrentUserTripNumberToNextLoyaltyProgram() {
     if ($nextLoyaltyProgram == null) {
         return 0;
     } else {
-        $numberOfReservation = getCurrentUserReservations();
+        $numberOfReservation = count(getCurrentUserReservations());
         return $nextLoyaltyProgram["required_trip_number"] - $numberOfReservation; 
     }
     

@@ -43,6 +43,14 @@ function createReservation($clientId, $reservationDate) {
     $req = $db->prepare("INSERT INTO reservations (client_id, reservation_date) VALUES (?, ?)"); 
     $req->execute([$clientId, $reservationDate]);
 }
+function addNewTrip($destination, $start_date, $end_date, $price) {
+    // Connexion à la base de données
+    $db = new PDO('mysql:host=localhost;dbname=travel_agency', 'root', '');
+
+    // Prépare et exécute la requête d'insertion
+    $query = $db->prepare("INSERT INTO trips (destination, start_date, end_date, price) VALUES (?, ?, ?, ?)");
+    return $query->execute([$destination, $start_date, $end_date, $price]);
+}
 
 
 

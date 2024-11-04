@@ -67,6 +67,24 @@ if (count($previousReservations)==0) {
 
 }
 ?>
+    <?php
+    // Vérifie s'il y a des réservations précédentes ou non, puis affiche le bouton en-dessous du tableau
+    ?>
+    </tbody>
+    </table>
+    <?php
+    // Check if there are previous reservations, then display the button below the table
+    ?>
+    </tbody>
+    </table>
+    <?php  ?>
+
+    <!-- Button to add a new trip -->
+    <div class="mt-3">
+        <a href="add_trip.php" class="btn btn-primary">Add a New Trip</a>
+    </div>
+
+
 
 </div>
 
@@ -79,3 +97,4 @@ include_once __DIR__.'/common/footer.php'
 ?>
 </body>
 </html>
+

@@ -11,6 +11,7 @@ function getDatabase() {
    $dbName = $config['database']['dbname'];
 
    return new PDO("mysql:host=".$dbHost.":3306;dbname=".$dbName.";charset=utf8", $dbUsername, $dbPassword);
+
 }
 
 ?>

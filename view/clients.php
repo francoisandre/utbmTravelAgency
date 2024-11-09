@@ -40,8 +40,7 @@ include_once __DIR__.'/common/menu.php' ;
       <td>".$client["program_name"]."</td>
  <td>
             <a href='".getBaseUrl()."controller/client/c_deleteClient.php?email=".$client["email"]."' onclick='return confirmDelete();' style='cursor:pointer'>
-                <i class='material-icons' style='color: red;'>delete</i>
-            </a>
+            <i class='material-icons' style='color: red;'>delete</i></a>
            <button  type='button' onclick='addFakeReservation(\"".$client["email"]."\")' class='btn btn-primary btn-sm' >Add fake reservations</button>
             
         </td>

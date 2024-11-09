@@ -32,6 +32,7 @@ try {
     createUser("francois.andre.perso@gmail.com", "toto", "Francois", "ANDRE", "0622422400", true);
     createUser("alexandre@gmail.com", "utbm", "Alexandre", "ANDRE", "0622422400", true);
     createUser("ayoub@gmail.com", "utbm", "Ayoub", "CHERAMAT", "07793559", true);
+    createUser("jad@gmail.com", "utbm", "Jad", "KAHLAOUI", "07793558", true);
 
     echo "<br/>";
     echo "Administrateurs ajoutés avec succès.";

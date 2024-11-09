@@ -122,6 +122,15 @@ function createUser($email, $password, $firstName, $lastName, $phoneNumber, $isS
     $req->execute([$user_id, $firstName, $lastName,$phoneNumber, $loyalty_program_id]);
 }
 
+function updateUser($userId, $email, $firstName, $lastName, $phoneNumber) {
+    $db = getDatabase();
+    $req = $db->prepare("UPDATE users SET email = ? WHERE user_id = ? "); 
+    $req->execute([$email, $userId]);
+
+    $req = $db->prepare("UPDATE clients SET first_name = ?, last_name = ?, phone_number = ? WHERE user_id = ? "); 
+    $req->execute([$firstName, $lastName, $phoneNumber, $userId]);
+}
+
 function isLogged() {
     return isset($_SESSION['email']);
 }

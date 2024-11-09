@@ -31,8 +31,12 @@ include_once __DIR__.'/../../util/userUtils.php';
                     <?php endif; ?>
 
                     <li class="nav-item">
+                    <a class="nav-link <?php if ($currentActiveMenu != 'profile') echo 'active'; ?>" href="<?php echo getBaseUrl()?>controller/client/c_editProfile.php">My profile</a>
+                    </li>
+
+                    <li class="nav-item">
                     <a class="nav-link <?php if ($currentActiveMenu != 'login') echo 'active'; ?>" href="<?php echo getBaseUrl()?>controller/c_logout.php">Log Out</a>
-                </li>
+                    </li>
                     <?php endif; ?>
             </ul>
         </div>

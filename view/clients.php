@@ -39,8 +39,10 @@ include_once __DIR__.'/common/menu.php' ;
       <td>".$client["email"]."</td>
       <td>".$client["program_name"]."</td>
  <td>
+  <a href='".getBaseUrl()."controller/client/c_editClient.php?email=".$client["email"]."'  style='cursor:pointer'>
+  <i title='Edit' class='material-icons' style='color: green;'>edit</i></a>
             <a href='".getBaseUrl()."controller/client/c_deleteClient.php?email=".$client["email"]."' onclick='return confirmDelete();' style='cursor:pointer'>
-            <i class='material-icons' style='color: red;'>delete</i></a>
+            <i title='Delete' class='material-icons' style='color: red;'>delete</i></a>
            <button  type='button' onclick='addFakeReservation(\"".$client["email"]."\")' class='btn btn-primary btn-sm' >Add fake reservations</button>
             
         </td>

@@ -32,9 +32,6 @@ include_once 'common/menu.php' ?>
     <label for="passwd"> Password :</label>
     <input id="passwd"  class="form-control" name="passwd" type="password" required="required" placeholder="Please enter your password" /><br/>
 
-<!--   PAS UTILE  <label for="BD">Date de naissance:</label>-->
-<!--    <input id="BD"  class="form-control" name="birth_date" type="date" value="bd" /><br/><br/>-->
-
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Sign up</button>
     </div>

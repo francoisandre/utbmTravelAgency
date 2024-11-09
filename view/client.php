@@ -30,6 +30,11 @@ include_once 'common/menu.php' ?>
     <label for="email"  >Email :</label>
     <input id="email" class="form-control" name="email" type="text" required="required" value="<?php echo $_SESSION['editedClient']['email'] ?>" /><br/>
 
+    <?php if ($_SESSION['clientEditionMode'] == "creation"): ?> 
+        <label for="passwd"> Password :</label>
+        <input id="passwd"  class="form-control" name="passwd" type="password" required="required" value="<?php echo $_SESSION['editedClient']['passwd'] ?>" /><br/>
+    <?php endif; ?>
+
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Save</button>
     </div>

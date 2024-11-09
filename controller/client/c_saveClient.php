@@ -13,7 +13,7 @@ if(!isset($_SESSION['editedClient'])) {
 }
 
 $editedClient = $_SESSION['editedClient'];
-$userId = $editedClient['user_id'];
+
 
 if(!isset($_POST["email"])) {
     $_GET['errorMessage']="Email is mandatory";
@@ -37,13 +37,46 @@ if(!isset($_POST["phone"])) {
     exit();
 }
 
+if ($_SESSION['clientEditionMode'] == "creation") {
+if(!isset($_POST["passwd"])) {
+    $_GET['errorMessage']="Phone is mandatory";
+    include __DIR__.'/../../view/profile.php';
+    exit();
+}
+}
 
 $email = $_POST["email"];
 $firstName =  $_POST["firstName"];
 $lastName = $_POST["lastName"];
 $phone = $_POST["phone"];
 
+if ($_SESSION['clientEditionMode'] == "creation") {
 
+    $password = $_POST["passwd"];
+    $isStaff = false;
+    $existingClient = getClientByEmail($email);
+    if ($existingClient == null) {
+        //We can create the user
+        createUser($email, $password, $firstName, $lastName, $phone, $isStaff);
+        $_GET['successMessage']="User added";
+        include __DIR__.'/../../view/clients.php';
+        exit;
+    } else {
+        $_GET['errorMessage']="This email is already used";
+        $_SESSION['editedClient'] =  [
+            "first_name" => $firstName,
+            "last_name" => $lastName,
+            "email" => $email,
+            "phone_number" => $phone,
+            "passwd" => $password
+        ];
+        include __DIR__.'/../../view/client.php';
+        exit;
+    }
+
+}
+
+$userId = $editedClient['user_id'];
 updateUser($userId, $email, $firstName, $lastName, $phone);
 
 $_GET['successMessage']="Information updated";

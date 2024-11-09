@@ -6,7 +6,7 @@ include_once __DIR__.'/../../util/userUtils.php';
 
 goToLoginIfNotConnected();
 
-$_SESSION['currentUser'] = $getCurrentUser();
+$_SESSION['currentUser'] = getCurrentUser();
 
 include __DIR__.'/../../view/profile.php';
 

@@ -12,6 +12,7 @@ if (!isset($_GET["email"])) {
     exit();
     }
 
+$_SESSION['clientEditionMode'] = "edition";
 $_SESSION['editedClient'] = getClientByEmail($_GET["email"]);
 
 include __DIR__.'/../../view/client.php';

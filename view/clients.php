@@ -65,13 +65,14 @@ function addFakeReservation(email) {
 
 </script>
 
-<form method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">
-    <div class="col-12">
+
+<div class="col-12">
+    <form style="display: inline-block;" method="post" action="<?php echo getBaseUrl()?>controller/client/c_newClient.php">
+        <button class="btn btn-primary" type="submit">Add New Client</button>
+    </form>
+    <form style="display: inline-block;" method="post" action="<?php echo getBaseUrl()?>controller/fake/c_fakeClients.php">
         <button class="btn btn-primary" type="submit">Add Fake Clients</button>
-    </div>
-</form>
-
-
+    </form>
 </div>
 <?php 
 include_once __DIR__.'/common/footer.php' 

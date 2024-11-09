@@ -1,1 +1,5 @@
 /.project
+.idea/vcs.xml
+.idea/utbmTravelAgency.iml
+.idea/php.xml
+.idea/modules.xml

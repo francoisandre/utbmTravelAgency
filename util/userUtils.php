@@ -69,7 +69,7 @@ function getClients() {
 
 function getClientByEmail($email) {
     $db = getDatabase();
-    $req = $db->prepare("select first_name, last_name, email, program_name, client_id from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id and email = ?");
+    $req = $db->prepare("select first_name, last_name, email, phone_number, program_name, client_id,clients.user_id as user_id from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id and email = ?");
     $req->execute([$email]);
     $data = $req->fetch(PDO::FETCH_ASSOC);
     if ($data == false) {

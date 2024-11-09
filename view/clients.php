@@ -22,10 +22,10 @@ include_once __DIR__.'/common/menu.php' ;
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Email</th>
-      <th scope="col">Programme de fidélité</th>
+      <th scope="col">First name</th>
+      <th scope="col">Name</th>
+      <th scope="col">mail</th>
+      <th scope="col">Loyalty program</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>

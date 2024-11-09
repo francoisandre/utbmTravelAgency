@@ -137,7 +137,7 @@ function isLogged() {
 
 function goToLoginIfNotConnected() {
     if (!isLogged()){
-        $_GET['errorMessage']="Veuillez vous connecter";
+        $_GET['errorMessage']="Please log in";
         include_once __DIR__.'/../view/login.php';
         exit();
     }
@@ -145,7 +145,7 @@ function goToLoginIfNotConnected() {
 
 function goToLoginIfNotAdmin() {
     if (!isAdmin()){
-        $_GET['errorMessage']="Veuillez vous connecter en tant qu'administrateur";
+        $_GET['errorMessage']="Please log in as administrator";
         include_once __DIR__.'/../view/login.php';
         exit();
     }

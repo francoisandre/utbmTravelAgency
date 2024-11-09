@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérifie si l'ajout a été un succès
     if ($result) {
-        header('Location: dashboard.php?message=Voyage ajouté avec succès');
+        header('Location: dashboard.php?message=Trip added successfully');
     } else {
-        echo "Erreur : le voyage n'a pas pu être ajouté.";
+        echo "Error: The trip could not be added.";
     }
 }
 ?>

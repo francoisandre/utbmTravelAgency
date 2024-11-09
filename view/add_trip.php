@@ -32,7 +32,7 @@ include_once __DIR__.'/common/menu.php';
             <input type="number" class="form-control" id="price" name="price" required>
         </div>
         <!-- Ajouter d'autres champs selon les besoins (type de package, hébergement, etc.) -->
-        <button type="submit" class="btn btn-success mt-3">Enregistrer le Voyage</button>
+        <button type="submit" class="btn btn-success mt-3">Save the Trip</button>
     </form>
 </div>
 

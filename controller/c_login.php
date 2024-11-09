@@ -35,7 +35,7 @@ if($data != null && password_verify($password, $data['password'])) {
 
     include __DIR__.'/../view/dashboard.php';
 } else {
-    $_GET['errorMessage']="Erreur d'indentifiants";
+    $_GET['errorMessage']="incorrect password or email";
     include __DIR__.'/../view/login.php';
 }
 

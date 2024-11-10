@@ -5,7 +5,13 @@ include_once __DIR__.'/../util/reservationUtils.php';
 goToLoginIfNotConnected();
 ?>
 <html lang="en">
+<<<<<<< HEAD
 <?php include_once __DIR__.'/common/header.php'; ?>
+=======
+<?php
+include_once __DIR__.'/common/header.php';
+?>
+>>>>>>> c453d441a52600ed5ee3a02f9061ce9e8a3d6506
 <body>
 <style>
     .citation {
@@ -71,6 +77,7 @@ include_once __DIR__.'/common/menu.php';
     </div>
 
     <div class="row">
+       
         <div class="col-12 col-md-8">
             <div class="mt-3">
                 <a href="<?= getBaseUrl(); ?>view/add_trip.php" class="btn btn-primary">Add a New Trip</a>
@@ -131,6 +138,7 @@ include_once __DIR__.'/common/menu.php';
             <?php } ?>
         </div>
 
+      
         <div class="col-12 col-md-8" style="margin-top: 30px;">
             <h4 class="mt-3">Previous reservations</h4>
             <?php

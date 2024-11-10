@@ -17,30 +17,30 @@ $editedClient = $_SESSION['editedClient'];
 
 if(!isset($_POST["email"])) {
     $_GET['errorMessage']="Email is mandatory";
-    include __DIR__.'/../../view/profile.php';
+    include __DIR__.'/../../view/client.php';
     exit();
 }
 if(!isset($_POST["firstName"])) {
     $_GET['errorMessage']="First name is mandatory";
-    include __DIR__.'/../../view/profile.php';
+    include __DIR__.'/../../view/client.php';
     exit();
 }
 if(!isset($_POST["lastName"])) {
     $_GET['errorMessage']="Last name is mandatory";
-    include __DIR__.'/../../view/profile.php';
+    include __DIR__.'/../../view/client.php';
     exit();
 }
 
 if(!isset($_POST["phone"])) {
     $_GET['errorMessage']="Phone is mandatory";
-    include __DIR__.'/../../view/profile.php';
+    include __DIR__.'/../../view/client.php';
     exit();
 }
 
 if ($_SESSION['clientEditionMode'] == "creation") {
 if(!isset($_POST["passwd"])) {
     $_GET['errorMessage']="Phone is mandatory";
-    include __DIR__.'/../../view/profile.php';
+    include __DIR__.'/../../view/client.php';
     exit();
 }
 }

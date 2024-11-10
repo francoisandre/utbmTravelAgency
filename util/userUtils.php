@@ -61,7 +61,15 @@ function getCurrentUser() {
 
 function getClients() {
     $db = getDatabase();
-    $req = $db->prepare("select first_name, last_name, email, program_name from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id");
+    $req = $db->prepare("select * from clients, users, loyaltyprograms where clients.user_id=users.user_id and isStaff= 0 and loyaltyprograms.loyalty_program_id = clients.loyalty_program_id");
+    $req->execute();
+    $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
+}
+
+function getClientsAndAdmins() {
+    $db = getDatabase();
+    $req = $db->prepare("select * from clients");
     $req->execute();
     $data = $req->fetchAll(PDO::FETCH_ASSOC);
     return $data;
@@ -129,6 +137,12 @@ function updateUser($userId, $email, $firstName, $lastName, $phoneNumber) {
 
     $req = $db->prepare("UPDATE clients SET first_name = ?, last_name = ?, phone_number = ? WHERE user_id = ? "); 
     $req->execute([$firstName, $lastName, $phoneNumber, $userId]);
+}
+
+function updateLoyaltyProgramIdForClient($clientId, $loyaltyProgramId) {
+    $db = getDatabase();
+    $req = $db->prepare("UPDATE clients SET loyalty_program_id = ? WHERE client_id = ? "); 
+    $req->execute([$loyaltyProgramId, $clientId]);
 }
 
 function isLogged() {

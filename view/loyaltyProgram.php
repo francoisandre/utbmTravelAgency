@@ -25,7 +25,7 @@ include_once 'common/menu.php' ?>
     <input id="discountPercentage" class="form-control" name="discountPercentage" type="text" required="required" value="<?php echo $_SESSION['editedLoyaltyProgram']['discountPercentage'] ?>" /><br/>
 
     <label for="requiredTripNumber"  >Required trips number  :</label>
-    <input id="requiredTripNumber" <?php if ($_SESSION['editedLoyaltyProgram']['requiredTripNumber'] ==0) { echo "disabled";} ?>  class="form-control" name="requiredTripNumber" type="tel" required="required" value="<?php echo $_SESSION['editedLoyaltyProgram']['requiredTripNumber'] ?>" /><br/>
+    <input id="requiredTripNumber" <?php if ($_SESSION['editedLoyaltyProgram']['requiredTripNumber'] ==0 && $_SESSION['loyaltyProgramEditionMode'] =="edition") { echo "disabled";} ?>  class="form-control" name="requiredTripNumber" type="tel" required="required" value="<?php echo $_SESSION['editedLoyaltyProgram']['requiredTripNumber'] ?>" /><br/>
 
     <label for="colorCode"  >Colour code :</label>
     <input id="colorCode" class="form-control" name="colorCode" type="color" required="required" value="<?php echo $_SESSION['editedLoyaltyProgram']['colorCode'] ?>" /><br/>

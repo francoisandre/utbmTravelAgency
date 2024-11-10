@@ -122,31 +122,40 @@ include_once __DIR__.'/common/menu.php'
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    foreach ($previousReservations as $index => $reservation) {
-                        $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';
-                        $reservationId = $reservation['reservationId']; 
-                        echo("<td>".($index+1)."</td>");
-                        echo("<td style='white-space: nowrap;'>".explode(" ",$reservationDate)[0]."</td>");
-                    echo("<td>");
-                    if ($reservation["feedback_id"] == null){
-                        echo("<a href='".getBaseUrl()."controller/feedback/c_newFeedback.php?reservationId=".$reservationId."' class='btn btn-primary'>Add Feedback</a>");
-                    }else{
-                        echo("<blockquote class='citation'>".$reservation["comments"]."</blockquote>");
-                        echo("<div class='mycontainer'><div class='mybox'>");
-                        for ($i=0;$i<$reservation["rating"];$i++){
-                            echo("<i  class='material-icons' style='color: gold;'>star</i>");
-                        }
-                        echo("</div><div class='mybox'>");
-                        echo("<a href='".getBaseUrl()."controller/feedback/c_editFeedback.php?reservationId=".$reservationId."' class='btn btn-primary'>Edit Feedback</a></div>");
+    <?php
+    foreach ($previousReservations as $index => $reservation) {
+        $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';
+        $reservationId = $reservation['reservationId']; 
+        echo("<td>".($index+1)."</td>");
+        echo("<td style='white-space: nowrap;'>".explode(" ",$reservationDate)[0]."</td>");
+        echo("<td>");
+        
+        if ($reservation["feedback_id"] == null) {
+            // Icône pour ajouter un feedback
+            echo("<a href='".getBaseUrl()."controller/feedback/c_newFeedback.php?reservationId=".$reservationId."' class='btn btn-link' title='Add Feedback'>");
+            echo("<i class='material-icons' style='font-size: 24px; color: blue;'>comment</i>");
+            echo("</a>");
+        } else {
+            // Affichage des commentaires et des étoiles
+            echo("<blockquote class='citation'>".$reservation["comments"]."</blockquote>");
+            echo("<div class='mycontainer'><div class='mybox'>");
+            for ($i=0; $i < $reservation["rating"]; $i++) {
+                echo("<i class='material-icons' style='color: gold;'>star</i>");
+            }
+            echo("</div><div class='mybox'>");
+            // Icône pour éditer le feedback
+            echo("<a href='".getBaseUrl()."controller/feedback/c_editFeedback.php?reservationId=".$reservationId."' class='btn btn-link' title='Edit Feedback'>");
+            echo("<i class='material-icons' style='font-size: 24px; color: green;'>edit</i>");
+            echo("</a>");
+            echo("</div>");
+        }
 
-                    }
-                    // echo print_r($reservation) ;   
-                    echo("</td>");
-                        echo("</tr>");
-                    }
-                    ?>
-                </tbody>
+        echo("</td>");
+        echo("</tr>");
+    }
+    ?>
+</tbody>
+
             </table>
             <?php } ?>
         </div>

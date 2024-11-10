@@ -30,7 +30,7 @@ include_once 'common/menu.php' ?>
         <input type="text" class="form-control" id="id_booking" name="id_booking" required="required" placeholder="Enter your reservation number" ><br>
 
         <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" required="required"><br>
+        <input type="number" id="amount" class="form-control" min="1" name="amount" required="required"><br>
 
         <label for="payment_method">Payment Method:</label>
         <select id="payment_method" class="form-control" name="payment_method" required>

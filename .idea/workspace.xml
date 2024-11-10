@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="add trip dans la base de donner">
-      <change beforePath="$PROJECT_DIR$/view/add_trip.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/add_trip.php" afterDir="false" />
+    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +98,8 @@
       <workItem from="1730633964782" duration="9390000" />
       <workItem from="1731160361430" duration="19304000" />
       <workItem from="1731180039757" duration="110000" />
-      <workItem from="1731244744552" duration="5052000" />
+      <workItem from="1731244744552" duration="8034000" />
+      <workItem from="1731272044000" duration="308000" />
     </task>
     <task id="LOCAL-00001" summary="add trip v1">
       <option name="closed" value="true" />
@@ -124,7 +125,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731249607878</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add trip dans la base de donner avec l'id du client">
+      <option name="closed" value="true" />
+      <created>1731249970126</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731249970126</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add tripavec le deleate version complete">
+      <option name="closed" value="true" />
+      <created>1731271642699</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731271642699</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +163,8 @@
     <MESSAGE value="add trip v1" />
     <MESSAGE value="add trip v2" />
     <MESSAGE value="add trip dans la base de donner" />
-    <option name="LAST_COMMIT_MESSAGE" value="add trip dans la base de donner" />
+    <MESSAGE value="add trip dans la base de donner avec l'id du client" />
+    <MESSAGE value="add tripavec le deleate version complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="add tripavec le deleate version complete" />
   </component>
 </project>

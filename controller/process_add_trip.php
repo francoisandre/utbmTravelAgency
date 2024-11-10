@@ -4,39 +4,34 @@ include_once __DIR__.'/../util/userUtils.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Vérifier que l'utilisateur est connecté et obtenir les informations
     $user = getCurrentUser();
     if (!$user) {
         echo "Erreur : l'utilisateur n'est pas connecté.";
         exit;
     }
 
-    // Récupérer l'ID du client
     $clientId = $user['client_id'];
-
-    // Récupérer les autres données du formulaire
     $packageType = $_POST['package_type'];
     $startDate = $_POST['start_date'];
+    $endDate = $_POST['end_date'];
     $numberOfTravelers = $_POST['number_of_travelers'];
 
-    // Connexion à la base de données
     $conn = getDatabase();
 
     try {
-        // Trouver l'ID du package en fonction du package_type sélectionné
         $stmt = $conn->prepare("SELECT package_id FROM travelpackages WHERE package_name = ?");
         $stmt->execute([$packageType]);
         $package = $stmt->fetch();
 
         if ($package) {
-            // Insérer les informations de réservation dans la table `reservations`
             $sql = "INSERT INTO reservations (client_id, package_id, reservation_date, number_of_travelers) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-
-            // Exécuter l'insertion avec l'ID du client
             $stmt->execute([$clientId, $package['package_id'], $startDate, $numberOfTravelers]);
 
-            echo "La réservation a été ajoutée avec succès.";
+            echo "<div style='text-align: center; margin-top: 20px;'>";
+            echo "<h3>Reservation successfully added!</h3>";
+            echo "<a href='../view/dashboard.php' class='btn btn-primary' style='margin-top: 15px;'>Return to Dashboard</a>";
+            echo "</div>";
         } else {
             echo "Erreur : le package sélectionné est introuvable dans la base de données.";
         }

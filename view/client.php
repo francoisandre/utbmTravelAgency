@@ -3,7 +3,7 @@ include_once __DIR__.'/common/session.php';
 include_once __DIR__.'/../util/pathUtils.php';
 include_once __DIR__.'/../util/userUtils.php';
 
-goToLoginIfNotConnected();
+goToLoginIfNotAdmin();
  
 ?>
 <html>
@@ -14,7 +14,7 @@ include_once __DIR__.'/common/header.php'
 $currentActiveMenu = "profile";
 include_once 'common/menu.php' ?>
 <div class="container mt-4">
-<h2>Client Edition: </h2>
+<h2>Client <?php echo $_SESSION['clientEditionMode'] ?>: </h2>
 
 <form method="post" action="<?php echo getBaseUrl()?>controller/client/c_saveClient.php">
 

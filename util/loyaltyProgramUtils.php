@@ -21,7 +21,14 @@ function getLoyaltyProgramFromId($id) {
     $req = $db->prepare("SELECT * FROM loyaltyprograms WHERE loyalty_program_id = ?");
     $req->execute([$id]);
     $data = $req->fetch();
-    return $data;
+
+    // We duplicate fields with camel cased entries...
+   $data["programName"] = $data["program_name"];
+   $data["colorCode"] = $data["color_code"];
+   $data["discountPercentage"] = $data["discount_percentage"];
+   $data["requiredTripNumber"] = $data["required_trip_number"];
+
+   return $data;
 }
 
 function getNextLoyaltyProgram($currentProgram) {
@@ -35,6 +42,38 @@ function getNextLoyaltyProgram($currentProgram) {
     } else {
         return $data;
     }
+}
+
+function recomputeClientLoyaltyProgram() {
+
+}
+
+function updateLoyaltyProgram($loyaltyProgramId, $programName, $discountPercentage, $requiredTripNumber, $colorCode) {
+    $db = getDatabase();
+    $req = $db->prepare("UPDATE loyaltyprograms SET program_name = ?, discount_percentage = ?, required_trip_number = ?, color_code = ? WHERE loyalty_program_id = ? "); 
+    $req->execute([$programName, $discountPercentage, $requiredTripNumber, $colorCode, $loyaltyProgramId]);
+}
+
+function getLoyaltyProgramByRequiredTripNumber($requiredTripNumber) {
+    $db = getDatabase();
+    $req = $db->prepare("SELECT * FROM loyaltyprograms WHERE required_trip_number = ?");
+    $req->execute([$requiredTripNumber]);
+    $data = $req->fetch();
+    if ($data == false) {
+        //No matching program
+        return null;
+    } else {
+        return $data;
+    }
+}
+
+
+function getLoyaltyPrograms() {
+    $db = getDatabase();
+    $req = $db->prepare("select * from loyaltyprograms order by required_trip_number ASC");
+    $req->execute();
+    $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $data;
 }
 
 function getCurrentUserTripNumberToNextLoyaltyProgram() {

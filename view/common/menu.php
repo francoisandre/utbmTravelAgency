@@ -28,6 +28,9 @@ include_once __DIR__.'/../../util/userUtils.php';
                         <li class="nav-item">
                         <a class="nav-link <?php if ($currentActiveMenu != 'accomodations') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/accomodations.php">Accommodations</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php if ($currentActiveMenu != 'loyaltyPrograms') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/loyaltyPrograms.php">Loyalty Programs</a>
+                    </li>
                     <?php endif; ?>
 
                     <li class="nav-item">

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="add trip v1">
-      <change afterPath="$PROJECT_DIR$/controller/trip/db_functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/c_databaseInitialisation.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/c_databaseInitialisation.php" afterDir="false" />
+    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="add trip dans la base de donner">
+      <change beforePath="$PROJECT_DIR$/view/add_trip.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/add_trip.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +65,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\PhpstormProjects\utbmTravelAgency\util" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -93,7 +96,9 @@
       <workItem from="1730630600309" duration="3212000" />
       <workItem from="1730633845845" duration="107000" />
       <workItem from="1730633964782" duration="9390000" />
-      <workItem from="1731160361430" duration="18955000" />
+      <workItem from="1731160361430" duration="19304000" />
+      <workItem from="1731180039757" duration="110000" />
+      <workItem from="1731244744552" duration="5052000" />
     </task>
     <task id="LOCAL-00001" summary="add trip v1">
       <option name="closed" value="true" />
@@ -103,7 +108,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731175681794</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add trip v2">
+      <option name="closed" value="true" />
+      <created>1731179873539</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731179873539</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add trip dans la base de donner">
+      <option name="closed" value="true" />
+      <created>1731249607878</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731249607878</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,17 +144,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="add trip v1" />
-    <option name="LAST_COMMIT_MESSAGE" value="add trip v1" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/view/dashboard.php</url>
-          <line>8</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="add trip v2" />
+    <MESSAGE value="add trip dans la base de donner" />
+    <option name="LAST_COMMIT_MESSAGE" value="add trip dans la base de donner" />
   </component>
 </project>

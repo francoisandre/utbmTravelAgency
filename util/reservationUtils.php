@@ -53,5 +53,4 @@ function addNewTrip($destination, $start_date, $end_date, $price) {
 }
 
 
-
 ?>

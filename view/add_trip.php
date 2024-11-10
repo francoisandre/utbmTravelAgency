@@ -19,7 +19,7 @@ include_once __DIR__.'/common/menu.php';
     <h2>Add a New Trip</h2>
 
     <!-- Formulaire pour ajouter un voyage -->
-    <form action="process_add_trip.php" method="POST">
+    <form action="../controller/process_add_trip.php" method="POST">
         <!-- Menu déroulant pour sélectionner la destination -->
         <div class="form-group">
             <label for="destination">Destination</label>
@@ -65,6 +65,12 @@ include_once __DIR__.'/common/menu.php';
         <div class="form-group">
             <label for="end_date">End Date</label>
             <input type="date" class="form-control" id="end_date" name="end_date" required>
+        </div>
+
+        <!-- Champ pour le nombre de voyageurs -->
+        <div class="form-group">
+            <label for="number_of_travelers">Number of Travelers</label>
+            <input type="number" class="form-control" id="number_of_travelers" name="number_of_travelers" min="1" required>
         </div>
 
         <button type="submit" class="btn btn-success mt-3">Save the Trip</button>

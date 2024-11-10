@@ -39,7 +39,6 @@ include_once __DIR__.'/common/menu.php'
         </div>
     </div>
 
-    <!-- Button for New Trip moved above the future reservations -->
     <div class="row">
         <div class="col-12 col-md-8">
         <div class="mt-3">

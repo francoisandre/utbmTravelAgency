@@ -11,7 +11,7 @@ $_SESSION['editedFeedback'] =  [
     "rating" => 1,
     "comments" => ""  
 ];
-
+$_SESSION['editedfeedbackReservationId']=$_GET["reservationId"];
 include __DIR__.'/../../view/feedback.php';
 
 ?>

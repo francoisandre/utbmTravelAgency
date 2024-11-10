@@ -1,9 +1,17 @@
 <?php
 include_once __DIR__.'/../db/dbConnection.php';
 
+function getFeedbackByReservationId($reservationId){
+    $db = getDatabase();
+    $req = $db->prepare("SELECT * FROM feedback  WHERE reservation_id = ?");
+    $req->execute([$reservationId]);
+    $feedback = $req->fetch(PDO::FETCH_ASSOC);
+    return $feedback;
+}
+
+
 function updateFeedback($feedbackId, $rating, $comments) {
     $db = getDatabase();
-    
     $req = $db->prepare("UPDATE feedback SET rating = ?, comments = ? WHERE feedback_id = ?");
     $req->execute([$rating, $comments, $feedbackId]);
 }
@@ -35,7 +43,7 @@ function deleteFeedback($feedbackId) {
         throw new Exception("Feedback not found.");
     }
 }
-function saveFeedback($reservationId, $rating, $comments) {
+function createfeedback($reservationId, $rating, $comments) {
     $db = getDatabase();
     $req = $db->prepare("INSERT INTO feedback (reservation_id, rating, comments) VALUES (?, ?, ?)");
     $req->execute([$reservationId, $rating, $comments]);

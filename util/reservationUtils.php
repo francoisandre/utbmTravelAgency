@@ -17,9 +17,9 @@ function getCurrentUserFutureReservations() {
 function getCurrentUserPreviousReservations() {
     $user = getCurrentUser();
     $db = getDatabase();
-    $req = $db->prepare("SELECT r.*,f.* FROM reservations r LEFT JOIN feedback f ON f.reservation_id=r.reservation_id WHERE client_id = ? and reservation_date < NOW() ORDER BY reservation_date DESC");
+    $req = $db->prepare("SELECT r.reservation_id AS reservationId, r.*,f.* FROM reservations r LEFT JOIN feedback f ON f.reservation_id=r.reservation_id WHERE client_id = ? and reservation_date < NOW() ORDER BY reservation_date DESC");
     $req->execute([$user['client_id']]);
-    $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    $data = $req->fetchAll();
     if ($data == false) {
         return [];
     }

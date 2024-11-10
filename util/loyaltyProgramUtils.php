@@ -45,7 +45,19 @@ function getNextLoyaltyProgram($currentProgram) {
 }
 
 function recomputeClientLoyaltyProgram() {
+    $clients = getClientsAndAdmins();
+    for ($i = 0; $i < count($clients); $i++) {
+       $client = $clients[$i];
+       $numberOfReservations = count(getClientReservations($client['client_id']));
+       $loyaltyProgramId =  getLoyaltyProgramIdFromTripNumber($numberOfReservations);
+       updateLoyaltyProgramIdForClient($client['client_id'], $loyaltyProgramId);
+    }
+}
 
+function deleteLoyaltyProgram($loyaltyProgramId) {
+    $db = getDatabase();
+    $req = $db->prepare("DELETE FROM loyaltyprograms WHERE loyalty_program_id = ?");
+        $req->execute([$loyaltyProgramId    ]);
 }
 
 function updateLoyaltyProgram($loyaltyProgramId, $programName, $discountPercentage, $requiredTripNumber, $colorCode) {

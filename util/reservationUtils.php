@@ -38,6 +38,18 @@ function getCurrentUserReservations() {
    return $data;
 }
 
+function getClientReservations($clientId) {
+    $user = getCurrentUser();
+    $db = getDatabase();
+    $req = $db->prepare("SELECT * FROM reservations WHERE client_id = ? ORDER BY reservation_date ASC");
+    $req->execute([$clientId]);
+    $data = $req->fetchAll(PDO::FETCH_ASSOC);
+    if ($data == false) {
+        return [];
+    }
+   return $data;
+}
+
 function createReservation($clientId, $reservationDate) {
     $db = getDatabase();
     $req = $db->prepare("INSERT INTO reservations (client_id, reservation_date) VALUES (?, ?)"); 

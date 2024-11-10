@@ -11,7 +11,7 @@ goToLoginIfNotAdmin();
 include_once __DIR__.'/common/header.php' 
 ?>
 <?php 
-$currentActiveMenu = "profile";
+$currentActiveMenu = "client";
 include_once 'common/menu.php' ?>
 <div class="container mt-4">
 <h2>Client <?php echo $_SESSION['clientEditionMode'] ?>: </h2>

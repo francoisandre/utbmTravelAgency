@@ -71,8 +71,7 @@ CREATE TABLE `clients` (
 
 CREATE TABLE `feedback` (
   `feedback_id` int(11) NOT NULL,
-  `client_id` int(11) DEFAULT NULL,
-  `package_id` int(11) DEFAULT NULL,
+  `reservation_id` int(11) DEFAULT NULL,
   `rating` int(11) DEFAULT NULL CHECK (`rating` between 1 and 5),
   `comments` text DEFAULT NULL,
   `feedback_date` datetime DEFAULT current_timestamp()
@@ -186,8 +185,7 @@ ALTER TABLE `clients`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`feedback_id`),
-  ADD KEY `client_id` (`client_id`),
-  ADD KEY `package_id` (`package_id`);
+  ADD KEY `reservation_id` (`reservation_id`);
 
 --
 -- Index pour la table `loyaltyprograms`
@@ -309,8 +307,7 @@ ALTER TABLE `clients`
 -- Contraintes pour la table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `travelpackages` (`package_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`reservation_id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `payments`

@@ -42,9 +42,10 @@ include_once __DIR__.'/common/menu.php'
     <!-- Button for New Trip moved above the future reservations -->
     <div class="row">
         <div class="col-12 col-md-8">
-            <div class="mt-3">
-                <a href="add_trip.php" class="btn btn-primary">Add a New Trip</a>
-            </div>
+        <div class="mt-3">
+    <a href="<?= getBaseUrl() ?>view/add_trip.php" class="btn btn-primary">Add a New Trip</a>
+</div>
+
             <h4 class="mt-3">Future reservations</h4>
             <?php 
             $futureReservations = getCurrentUserFutureReservations();
@@ -94,8 +95,13 @@ include_once __DIR__.'/common/menu.php'
                         $reservationId = $reservation['reservation_id']; 
                         echo("<td>".($index+1)."</td>");
                         echo("<td>".explode(" ",$reservationDate)[0]."</td>");
-                    
-                        echo("<td><a href='view/feedback_form.php?reservation_id=".$reservation['reservation_id']."' class='btn btn-primary'>Add Feedback</a></td>");
+                    echo("<td>");
+                    if ($reservation["feedback_id"] == null){
+                        echo("<a href='".getBaseUrl()."controller/feedback/c_newFeedback.php?reservationId=".$reservationId."' class='btn btn-primary'>Add Feedback</a>");
+                    }else{
+                        echo("<a href='view/feedback_form.php?reservation_id=".$reservation['reservation_id']."' class='btn btn-primary'>Edit Feedback</a>");
+                    }
+                        echo("</td>");
                         echo("</tr>");
                     }
                     ?>

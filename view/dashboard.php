@@ -15,12 +15,12 @@ include_once __DIR__.'/common/menu.php'
 ?>
 <div class="container mt-4">
     <div class="row">
-        <!-- Welcome message first, aligned left with a bit of margin to center it vertically -->
+       
         <div class="col-12 col-md-8 d-flex justify-content-start mb-3" style="margin-top: 30px;">
             <h1 class="display-4">Welcome <?php echo getCurrentUserName() ?>!</h1>
         </div>
 
-        <!-- Loyalty program placed at the right of the welcome message -->
+       
         <div class="col-12 col-md-4" style="margin-top: 20px;">
             <div id="loyalty-program" class="p-3 bg-light border rounded" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                 <h4 class="display-6" style="font-size: 18px;"> 
@@ -39,9 +39,12 @@ include_once __DIR__.'/common/menu.php'
         </div>
     </div>
 
-    <!-- Future reservations displayed with the same width as loyalty program -->
+    <!-- Button for New Trip moved above the future reservations -->
     <div class="row">
         <div class="col-12 col-md-8">
+            <div class="mt-3">
+                <a href="add_trip.php" class="btn btn-primary">Add a New Trip</a>
+            </div>
             <h4 class="mt-3">Future reservations</h4>
             <?php 
             $futureReservations = getCurrentUserFutureReservations();
@@ -68,7 +71,6 @@ include_once __DIR__.'/common/menu.php'
             <?php } ?>
         </div>
 
-        <!-- Previous reservations displayed after the future ones -->
         <div class="col-12 col-md-8" style="margin-top: 30px;">
             <h4 class="mt-3">Previous reservations</h4>
             <?php 
@@ -82,13 +84,19 @@ include_once __DIR__.'/common/menu.php'
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Feedback</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     foreach ($previousReservations as $index => $reservation) {
                         $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';
-                        echo("<tr><td>".($index+1)."</td><td>".explode(" ",$reservationDate)[0]."</td></tr>");
+                        $reservationId = $reservation['reservation_id']; 
+                        echo("<td>".($index+1)."</td>");
+                        echo("<td>".explode(" ",$reservationDate)[0]."</td>");
+                    
+                        echo("<td><a href='view/feedback_form.php?reservation_id=".$reservation['reservation_id']."' class='btn btn-primary'>Add Feedback</a></td>");
+                        echo("</tr>");
                     }
                     ?>
                 </tbody>
@@ -96,15 +104,10 @@ include_once __DIR__.'/common/menu.php'
             <?php } ?>
         </div>
     </div>
-
-
 </div>
-
-
 
 <?php 
 include_once __DIR__.'/common/footer.php' 
 ?>
 </body>
 </html>
-

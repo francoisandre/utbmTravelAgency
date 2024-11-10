@@ -6,7 +6,7 @@ goToLoginIfNotConnected();
 ?>
 <html lang="en">
 <?php
-include_once __DIR__.'/common/header.php'
+include_once __DIR__.'/common/header.php';
 ?>
 <body>
 <style>
@@ -45,21 +45,19 @@ include_once __DIR__.'/common/header.php'
 </style>
 <?php
 $currentActiveMenu = "";
-include_once __DIR__.'/common/menu.php'
+include_once __DIR__.'/common/menu.php';
 ?>
 <div class="container mt-4">
     <div class="row">
-
         <div class="col-12 col-md-8 d-flex justify-content-start mb-3" style="margin-top: 30px;">
-            <h1 class="display-4">Welcome <?php echo getCurrentUserName() ?>!</h1>
+            <h1 class="display-4">Welcome <?php echo getCurrentUserName(); ?>!</h1>
         </div>
-
 
         <div class="col-12 col-md-4" style="margin-top: 20px;">
             <div id="loyalty-program" class="p-3 bg-light border rounded" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                 <h4 class="display-6" style="font-size: 18px;">
-                    <i style="font-size: 50px;vertical-align: middle;color:<?php echo getCurrentUser()["color_code"]?>" class="material-icons">emoji_events</i>
-                    Loyalty program: <?php echo getCurrentUser()['program_name'] ?>
+                    <i style="font-size: 50px;vertical-align: middle;color:<?php echo getCurrentUser()["color_code"]; ?>" class="material-icons">emoji_events</i>
+                    Loyalty program: <?php echo getCurrentUser()['program_name']; ?>
                 </h4>
                 <h5 class="display-7" style="font-size: 14px;"><?php
                     $neededTripNumber = getCurrentUserTripNumberToNextLoyaltyProgram();
@@ -74,6 +72,7 @@ include_once __DIR__.'/common/menu.php'
     </div>
 
     <div class="row">
+       
         <div class="col-12 col-md-8">
             <div class="mt-3">
                 <a href="<?= getBaseUrl() ?>view/add_trip.php" class="btn btn-primary">Add a New Trip</a>
@@ -100,12 +99,14 @@ include_once __DIR__.'/common/menu.php'
                         $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';
                         $reservationId = $reservation['reservation_id'];
                         echo "<tr>";
-                        echo "<td>".($index+1)."</td>";
-                        echo "<td>".explode(" ",$reservationDate)[0]."</td>";
+                        echo "<td>".($index + 1)."</td>";
+                        echo "<td>".explode(" ", $reservationDate)[0]."</td>";
                         echo "<td>";
-                        echo "<form action='../controller/delete_reservation.php' method='POST' style='display: inline;'>";
+                        echo "<form action='../controller/delete_reservation.php' method='POST' style='display: inline;' onsubmit='return confirmDeletion();'>";
                         echo "<input type='hidden' name='reservation_id' value='$reservationId'>";
-                        echo "<button type='submit' class='btn btn-danger btn-sm'>Delete</button>";
+                        echo "<button type='submit' class='btn btn-link' title='Delete'>";
+                        echo "<i class='material-icons' style='font-size: 24px; color: red;'>delete</i>";
+                        echo "</button>";
                         echo "</form>";
                         echo "</td>";
                         echo "</tr>";
@@ -116,6 +117,7 @@ include_once __DIR__.'/common/menu.php'
             <?php } ?>
         </div>
 
+      
         <div class="col-12 col-md-8" style="margin-top: 30px;">
             <h4 class="mt-3">Previous reservations</h4>
             <?php
@@ -138,8 +140,8 @@ include_once __DIR__.'/common/menu.php'
                         $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';
                         $reservationId = $reservation['reservationId'];
                         echo "<tr>";
-                        echo "<td>".($index+1)."</td>";
-                        echo "<td>".explode(" ",$reservationDate)[0]."</td>";
+                        echo "<td>".($index + 1)."</td>";
+                        echo "<td>".explode(" ", $reservationDate)[0]."</td>";
                         echo "<td>";
 
                         if ($reservation["feedback_id"] == null) {
@@ -149,7 +151,7 @@ include_once __DIR__.'/common/menu.php'
                         } else {
                             echo "<blockquote class='citation'>".$reservation["comments"]."</blockquote>";
                             echo "<div class='mycontainer'><div class='mybox'>";
-                            for ($i=0; $i < $reservation["rating"]; $i++) {
+                            for ($i = 0; $i < $reservation["rating"]; $i++) {
                                 echo "<i class='material-icons' style='color: gold;'>star</i>";
                             }
                             echo "</div><div class='mybox'>";
@@ -170,8 +172,14 @@ include_once __DIR__.'/common/menu.php'
     </div>
 </div>
 
+<script>
+    function confirmDeletion() {
+        return confirm("Are you sure you want to delete this reservation?");
+    }
+</script>
+
 <?php
-include_once __DIR__.'/common/footer.php'
+include_once __DIR__.'/common/footer.php';
 ?>
 </body>
 </html>

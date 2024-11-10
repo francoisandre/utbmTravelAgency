@@ -1,6 +1,11 @@
 <?php
 include_once __DIR__.'/../db/dbConnection.php';
 include_once __DIR__.'/common/session.php';
+include_once __DIR__.'/../util/userUtils.php';
+
+// Restreindre l'accès aux utilisateurs connectés uniquement
+goToLoginIfNotConnected();
+
 include_once __DIR__.'/common/header.php';
 $currentActiveMenu = "add_trip";
 include_once __DIR__.'/common/menu.php';

@@ -4,10 +4,10 @@ include_once __DIR__.'/../util/userUtils.php';
 include_once __DIR__.'/../util/reservationUtils.php';
 goToLoginIfNotConnected();
 ?>
+
 <html lang="en">
-<?php
-include_once __DIR__.'/common/header.php';
-?>
+<?php include_once __DIR__.'/common/header.php'; ?>
+
 <body>
 <style>
     .citation {
@@ -43,10 +43,12 @@ include_once __DIR__.'/common/header.php';
         text-align: center;
     }
 </style>
+
 <?php
 $currentActiveMenu = "";
 include_once __DIR__.'/common/menu.php';
 ?>
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-12 col-md-8 d-flex justify-content-start mb-3" style="margin-top: 30px;">
@@ -73,7 +75,6 @@ include_once __DIR__.'/common/menu.php';
     </div>
 
     <div class="row">
-       
         <div class="col-12 col-md-8">
             <div class="mt-3">
                 <a href="<?= getBaseUrl(); ?>view/add_trip.php" class="btn btn-primary">Add a New Trip</a>
@@ -108,21 +109,21 @@ include_once __DIR__.'/common/menu.php';
                             <td>
                                 <?php
                                 if ($paymentStatus === 'completed') {
-                                    echo "Payé";
+                                    echo "Payed";
                                 } elseif ($paymentStatus === 'refunded') {
-                                    echo "Remboursé";
+                                    echo "Refunded";
                                 } else {
-                                    echo "À payer";
+                                    echo "To pay";
                                 }
                                 ?>
                             </td>
                             <td>
                                 <?php if ($paymentStatus === 'pending'): ?>
-                                    <a href="<?= getBaseUrl(); ?>view/payment.php?reservation_id=<?= $reservationId; ?>" class="btn btn-success btn-sm">Payer</a>
+                                    <a href="<?= getBaseUrl(); ?>view/payment.php?reservation_id=<?= $reservationId; ?>" class="btn btn-success btn-sm">Pay</a>
                                 <?php elseif ($paymentStatus === 'completed'): ?>
-                                    <a href="<?= getBaseUrl(); ?>controller/refund_reservation.php?reservation_id=<?= $reservationId; ?>" class="btn btn-warning btn-sm">Remboursement</a>
+                                    <button data-reservation-id="<?= $reservationId; ?>" class="btn btn-warning btn-sm" id="refundButton">Refund</button>
                                 <?php endif; ?><br>
-                                <form action="../controller/delete_reservation.php" method="POST" style="display: inline;">
+                                <form action="<?= getBaseUrl(); ?>controller/delete_reservation.php" method="POST" style="display: inline;">
                                     <input type="hidden" name="reservation_id" value="<?= $reservationId; ?>">
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
@@ -134,7 +135,6 @@ include_once __DIR__.'/common/menu.php';
             <?php } ?>
         </div>
 
-      
         <div class="col-12 col-md-8" style="margin-top: 30px;">
             <h4 class="mt-3">Previous reservations</h4>
             <?php
@@ -177,7 +177,7 @@ include_once __DIR__.'/common/menu.php';
                                             <a href="<?= getBaseUrl(); ?>controller/feedback/c_editFeedback.php?reservationId=<?= $reservationId; ?>" class="btn btn-link" title="Edit Feedback">
                                                 <i class="material-icons" style="font-size: 24px; color: green;">edit</i>
                                             </a>
-                                        </div><a href="<?= getBaseUrl(); ?>controller/feedback/c_editFeedback.php?reservationId=<?= $reservationId; ?>" class="btn btn-link" title="Edit Feedback">
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                             </td>
@@ -190,6 +190,17 @@ include_once __DIR__.'/common/menu.php';
     </div>
 </div>
 
-<?php include_once __DIR__.'/common/footer.php'; ?>
+<?php include_once __DIR__  .'/common/footer.php'; ?>
+
+<script>
+    document.querySelectorAll("#refundButton").forEach(button => {
+        button.addEventListener("click", function() {
+            // Afficher un message pop-up avec l'adresse email du service client
+            alert("If you would like a refund, please contact customer service: travel.agency@utbm.fr");
+        });
+    });
+
+</script>
+
 </body>
 </html>

@@ -5,32 +5,72 @@ include_once __DIR__.'/../util/userUtils.php';
 
 goToLoginIfNotConnected();
 
+// Récupérer l'ID de réservation depuis l'URL
+$reservationId = isset($_GET['reservation_id']) ? $_GET['reservation_id'] : '';
+
+// Récupérer les informations nécessaires pour calculer le montant à payer
+$db = getDatabase();
+
+// Récupérer les informations de la réservation (package_id) et du client (loyalty_program_id)
+$req = $db->prepare("SELECT r.package_id, c.loyalty_program_id
+                     FROM reservations r
+                     JOIN clients c ON r.client_id = c.client_id
+                     WHERE r.reservation_id = ?");
+$req->execute([$reservationId]);
+$reservation = $req->fetch(PDO::FETCH_ASSOC);
+
+if (!$reservation) {
+    die("Réservation non trouvée");
+}
+
+// Récupérer les informations du package et du programme de fidélité
+$packageId = $reservation['package_id'];
+$loyaltyProgramId = $reservation['loyalty_program_id'];
+
+// Obtenir le prix du package
+$reqPackage = $db->prepare("SELECT price FROM travelpackages WHERE package_id = ?");
+$reqPackage->execute([$packageId]);
+$package = $reqPackage->fetch(PDO::FETCH_ASSOC);
+
+if (!$package) {
+    die("Package non trouvé");
+}
+
+$price = $package['price'];
+
+// Obtenir le pourcentage de réduction du programme de fidélité
+$reqLoyalty = $db->prepare("SELECT discount_percentage FROM loyaltyprograms WHERE loyalty_program_id = ?");
+$reqLoyalty->execute([$loyaltyProgramId]);
+$loyaltyProgram = $reqLoyalty->fetch(PDO::FETCH_ASSOC);
+
+$discountPercentage = $loyaltyProgram ? $loyaltyProgram['discount_percentage'] : 0;
+
+// Calculer le montant à payer après réduction
+$discountAmount = ($price * $discountPercentage) / 100;
+$finalAmount = $price - $discountAmount;
+
 ?>
 
 <html>
 
 <?php
-include_once __DIR__.'/common/header.php'
+include_once __DIR__.'/common/header.php';
 ?>
 
 <body>
 <?php
 $currentActiveMenu = "profile";
-include_once 'common/menu.php' ?>
+include_once 'common/menu.php'; ?>
 <div class="container mt-4">
-
-
-
 
     <!-- payment.php -->
 
-
     <form action="/controller/c_payment.php" method="POST">
         <label for="id_booking">Booking ID:</label>
-        <input type="text" class="form-control" id="id_booking" name="id_booking" required="required" placeholder="Enter your reservation number" ><br>
+        <input type="text" class="form-control" id="id_booking" name="id_booking" value="<?= htmlspecialchars($reservationId) ?>" required="required" readonly><br>
 
         <label for="amount">Amount:</label>
-        <input type="number" id="amount" class="form-control" min="1" name="amount" required="required"><br>
+        <input type="number" id="amount" class="form-control" min="1" name="amount" value="<?= htmlspecialchars($finalAmount) ?>" required="required" readonly><br>
 
         <label for="payment_method">Payment Method:</label>
         <select id="payment_method" class="form-control" name="payment_method" required>
@@ -45,8 +85,11 @@ include_once 'common/menu.php' ?>
         </div>
     </form>
 
+</div>
 </body>
+
 <?php
-include_once __DIR__.'/common/footer.php'
+include_once __DIR__.'/common/footer.php';
 ?>
+
 </html>

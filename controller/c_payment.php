@@ -1,7 +1,8 @@
 <?php
 // Ajustement des chemins selon l'arborescence
 include_once __DIR__.'/../view/common/session.php';  // Chemin vers session.php
-include_once __DIR__.'/../db/dbConnection.php';       // Chemin vers dbConfig.php ou dbConnection.php
+include_once __DIR__.'/../db/dbConnection.php';
+include_once __DIR__ . '/../util/pathUtils.php';  // Chemin vers dbConfig.php ou dbConnection.php
 
 // Affichage des erreurs
 error_reporting(E_ALL);
@@ -58,8 +59,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Exécution de la requête avec les valeurs
     if ($stmt->execute([$reservation_id, $payment_method, $payment_status, $payment_date])) {
         echo "Insertion réussie, redirection vers le tableau de bord...<br>";
-        header("Location: /view/dashboard.php");  // Redirection vers dashboard.php
+
+        // Utilisation de la base URL dynamique pour la redirection
+        echo "URL générée: " . getBaseUrl() . "view/dashboard.php"; // Pour vérifier l'URL
+
+        header("Location: " . getBaseUrl() . "view/dashboard.php");  // Redirection correcte vers dashboard.php
         exit();
+
+
+
+
     } else {
         // Affichage de l'erreur PDO
         $errorInfo = $stmt->errorInfo();

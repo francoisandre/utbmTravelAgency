@@ -5,13 +5,26 @@ include_once __DIR__."/../util/userUtils.php";
 function getCurrentUserFutureReservations() {
     $user = getCurrentUser();
     $db = getDatabase();
-    $req = $db->prepare("SELECT * FROM reservations WHERE client_id = ? and reservation_date >= NOW() ORDER BY reservation_date ASC");
+
+    // Requête pour récupérer les réservations futures et les statuts de paiement associés
+    $req = $db->prepare("
+        SELECT r.*, p.payment_status 
+        FROM reservations r 
+        LEFT JOIN payments p ON r.reservation_id = p.reservation_id 
+        WHERE r.client_id = ? 
+        AND r.reservation_date >= NOW() 
+        ORDER BY r.reservation_date ASC
+    ");
     $req->execute([$user['client_id']]);
     $data = $req->fetchAll(PDO::FETCH_ASSOC);
-    if ($data == false) {
+
+    // Si aucune donnée n'est retournée, retourner un tableau vide
+    if (empty($data)) {
         return [];
     }
-   return $data;
+
+    // Retourner les données des réservations futures
+    return $data;
 }
 
 function getCurrentUserPreviousReservations() {

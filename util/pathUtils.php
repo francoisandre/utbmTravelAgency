@@ -2,11 +2,11 @@
 
 function getBaseUrl() {
     $host = $_SERVER['HTTP_HOST'];
-
-    $requestUri = $_SERVER['REQUEST_URI'];
-    $segments = explode('/', trim($requestUri, '/')); 
-    $projectName = $segments[0]; 
-    $baseUrl = 'http://' . $host . '/' . $projectName . '/';
+// Récupère le projet dans l'URL (cela peut varier en fonction de l'arborescence)
+    $baseUrl = 'http://' . $host . '/utbmTravelAgency/';  // Remplace par le nom de ton projet
     return $baseUrl;
 }
+
 ?>
+
+

@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Utilisation de la base URL dynamique pour la redirection
         echo "URL générée: " . getBaseUrl() . "view/dashboard.php"; // Pour vérifier l'URL
 
-        header("Location: " . getBaseUrl() . "view/dashboard.php");  // Redirection correcte vers dashboard.php
+        header("Location: " . getBaseUrl() . "view/dashboard.php?payment_success=1");
         exit();
 
 

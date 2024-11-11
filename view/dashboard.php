@@ -2,6 +2,12 @@
 include_once __DIR__.'/common/session.php';
 include_once __DIR__.'/../util/userUtils.php';
 include_once __DIR__.'/../util/reservationUtils.php';
+
+if (isset($_GET['payment_success']) && $_GET['payment_success'] == '1') {
+    echo "<script>alert('Your receipt is available by e-mail');</script>";
+}
+
+
 goToLoginIfNotConnected();
 ?>
 
@@ -119,14 +125,22 @@ include_once __DIR__.'/common/menu.php';
                             </td>
                             <td>
                                 <?php if ($paymentStatus === 'pending'): ?>
-                                    <a href="<?= getBaseUrl(); ?>view/payment.php?reservation_id=<?= $reservationId; ?>" class="btn btn-success btn-sm">Pay</a>
+                                    <a href="<?= getBaseUrl(); ?>view/payment.php?reservation_id=<?= $reservationId; ?>" class="btn btn-link" title="Pay">
+                                        <i class="material-icons" style="color: green; font-size: 24px;">payment</i>
+                                    </a>
                                 <?php elseif ($paymentStatus === 'completed'): ?>
-                                    <button data-reservation-id="<?= $reservationId; ?>" class="btn btn-warning btn-sm" id="refundButton">Refund</button>
-                                <?php endif; ?><br>
+                                    <button data-reservation-id="<?= $reservationId; ?>" class="btn btn-link" id="refundButton" title="Refund">
+                                        <i class="material-icons" style="color: orange; font-size: 24px;">undo</i>
+                                    </button>
+                                <?php endif; ?>
+                                <br>
                                 <form action="<?= getBaseUrl(); ?>controller/delete_reservation.php" method="POST" style="display: inline;">
                                     <input type="hidden" name="reservation_id" value="<?= $reservationId; ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="submit" class="btn btn-link" title="Delete">
+                                        <i class="material-icons" style="color: red; font-size: 24px;">delete</i>
+                                    </button>
                                 </form>
+
                             </td>
                         </tr>
                     <?php } ?>

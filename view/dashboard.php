@@ -5,13 +5,9 @@ include_once __DIR__.'/../util/reservationUtils.php';
 goToLoginIfNotConnected();
 ?>
 <html lang="en">
-<<<<<<< HEAD
-<?php include_once __DIR__.'/common/header.php'; ?>
-=======
 <?php
 include_once __DIR__.'/common/header.php';
 ?>
->>>>>>> c453d441a52600ed5ee3a02f9061ce9e8a3d6506
 <body>
 <style>
     .citation {
@@ -181,7 +177,7 @@ include_once __DIR__.'/common/menu.php';
                                             <a href="<?= getBaseUrl(); ?>controller/feedback/c_editFeedback.php?reservationId=<?= $reservationId; ?>" class="btn btn-link" title="Edit Feedback">
                                                 <i class="material-icons" style="font-size: 24px; color: green;">edit</i>
                                             </a>
-                                        </div>
+                                        </div><a href="<?= getBaseUrl(); ?>controller/feedback/c_editFeedback.php?reservationId=<?= $reservationId; ?>" class="btn btn-link" title="Edit Feedback">
                                     </div>
                                 <?php endif; ?>
                             </td>

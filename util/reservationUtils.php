@@ -1,6 +1,7 @@
 <?php 
 include_once __DIR__."/../db/dbConnection.php";
 include_once __DIR__."/../util/userUtils.php";
+include_once __DIR__.'/../util/loyaltyProgramUtils.php';
 
 function getCurrentUserFutureReservations() {
     $user = getCurrentUser();
@@ -67,6 +68,7 @@ function createReservation($clientId, $reservationDate) {
     $db = getDatabase();
     $req = $db->prepare("INSERT INTO reservations (client_id, reservation_date) VALUES (?, ?)"); 
     $req->execute([$clientId, $reservationDate]);
+    recomputeCurrentUserLoyaltyProgram();
 }
 function addNewTrip($destination, $start_date, $end_date, $price) {
     // Connexion à la base de données

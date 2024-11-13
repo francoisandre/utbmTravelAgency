@@ -35,7 +35,7 @@ function getNextLoyaltyProgram($currentProgram) {
     $db = getDatabase();
     $req = $db->prepare("SELECT * FROM loyaltyprograms WHERE required_trip_number > ? ORDER BY required_trip_number ASC");
     $req->execute([$currentProgram['required_trip_number']]);
-    $data = $req->fetch();
+   $data = $req->fetch();
     if ($data == false) {
         //Maximum program reached
         return null;
@@ -52,6 +52,12 @@ function recomputeClientLoyaltyProgram() {
        $loyaltyProgramId =  getLoyaltyProgramIdFromTripNumber($numberOfReservations);
        updateLoyaltyProgramIdForClient($client['client_id'], $loyaltyProgramId);
     }
+}
+function recomputeCurrentUserLoyaltyProgram(){
+$user=getCurrentUser();
+$numberOfReservations = count(getClientReservations($user['client_id']));
+       $loyaltyProgramId =  getLoyaltyProgramIdFromTripNumber($numberOfReservations);
+       updateLoyaltyProgramIdForClient($user['client_id'], $loyaltyProgramId);
 }
 
 function deleteLoyaltyProgram($loyaltyProgramId) {

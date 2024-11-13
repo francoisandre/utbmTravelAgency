@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__.'/../db/dbConnection.php';
 include_once __DIR__.'/../util/userUtils.php';
+include_once __DIR__.'/../util/loyaltyProgramUtils.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "INSERT INTO reservations (client_id, package_id, reservation_date, number_of_travelers) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([$clientId, $package['package_id'], $startDate, $numberOfTravelers]);
+            recomputeCurrentUserLoyaltyProgram();
 
             echo "<div style='text-align: center; margin-top: 20px;'>";
             echo "<h3>Reservation successfully added!</h3>";

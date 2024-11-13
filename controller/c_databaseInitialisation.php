@@ -23,8 +23,8 @@ try {
 
     // Création des programmes de fidélité
     createLoyaltyProgram("Bronze", 5, 0, "#CD7F32;");
-    createLoyaltyProgram("Silver", 10, 5, "silver");
-    createLoyaltyProgram("Gold", 15, 15, "gold");
+    createLoyaltyProgram("Silver", 10, 5, "#C0C0C0");
+    createLoyaltyProgram("Gold", 15, 15, "#FFD700");
     createLoyaltyProgram("Platinium", 20, 50, "#E5E4E2;");
     echo "Programmes de fidélité ajoutés avec succès.<br/>";
 

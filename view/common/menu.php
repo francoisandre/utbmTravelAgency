@@ -20,6 +20,7 @@ include_once __DIR__.'/../../util/userUtils.php';
                     </li>
                 <?php else: ?>
                     <?php if (isAdmin()): ?> 
+                        
                         <li class="nav-item">
                             <a class="nav-link <?php if ($currentActiveMenu != 'clients') echo 'active'; ?>" href="<?php echo getBaseUrl()?>view/clients.php">Clients</a>
                         </li>

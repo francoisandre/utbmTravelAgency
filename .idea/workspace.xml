@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="">
+    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="complete version with the deleate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/addNewTrip.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +100,8 @@
       <workItem from="1731160361430" duration="19304000" />
       <workItem from="1731180039757" duration="110000" />
       <workItem from="1731244744552" duration="8034000" />
-      <workItem from="1731272044000" duration="308000" />
+      <workItem from="1731272044000" duration="2645000" />
+      <workItem from="1731529283063" duration="5502000" />
     </task>
     <task id="LOCAL-00001" summary="add trip v1">
       <option name="closed" value="true" />
@@ -141,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731271642699</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="complete version with the deleate">
+      <option name="closed" value="true" />
+      <created>1731272472113</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731272472113</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,6 +175,7 @@
     <MESSAGE value="add trip dans la base de donner" />
     <MESSAGE value="add trip dans la base de donner avec l'id du client" />
     <MESSAGE value="add tripavec le deleate version complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="add tripavec le deleate version complete" />
+    <MESSAGE value="complete version with the deleate" />
+    <option name="LAST_COMMIT_MESSAGE" value="complete version with the deleate" />
   </component>
 </project>

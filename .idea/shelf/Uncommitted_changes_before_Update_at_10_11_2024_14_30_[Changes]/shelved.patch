@@ -1,0 +1,78 @@
+Index: view/dashboard.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php \r\ninclude_once __DIR__.'/common/session.php';\r\ninclude_once __DIR__.'/../util/userUtils.php';\r\ninclude_once __DIR__.'/../util/reservationUtils.php';\r\ngoToLoginIfNotConnected();\r\n?>\r\n<html lang=\"en\">\r\n<?php \r\ninclude_once __DIR__.'/common/header.php' \r\n?>\r\n<body>\r\n<?php\r\n$currentActiveMenu = \"\";\r\ninclude_once __DIR__.'/common/menu.php' \r\n?>\r\n<div class=\"container mt-4\">\r\n    <div class=\"row\">\r\n       \r\n        <div class=\"col-12 col-md-8 d-flex justify-content-start mb-3\" style=\"margin-top: 30px;\">\r\n            <h1 class=\"display-4\">Welcome <?php echo getCurrentUserName() ?>!</h1>\r\n        </div>\r\n\r\n       \r\n        <div class=\"col-12 col-md-4\" style=\"margin-top: 20px;\">\r\n            <div id=\"loyalty-program\" class=\"p-3 bg-light border rounded\" style=\"box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\">\r\n                <h4 class=\"display-6\" style=\"font-size: 18px;\"> \r\n                    <i style=\"font-size: 50px;vertical-align: middle;color:<?php echo getCurrentUser()[\"color_code\"]?>\" class=\"material-icons\">emoji_events</i> \r\n                    Loyalty program: <?php echo getCurrentUser()['program_name'] ?>\r\n                </h4>\r\n                <h5 class=\"display-7\" style=\"font-size: 14px;\"><?php \r\n                    $neededTripNumber = getCurrentUserTripNumberToNextLoyaltyProgram();\r\n                    if ($neededTripNumber == 0) {\r\n                        echo \"You have reached the maximum loyalty program\";\r\n                    } else {\r\n                        echo \"You need \".$neededTripNumber.\" more reservation(s) to reach the next loyalty program\";\r\n                    }\r\n                ?></h5>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <!-- Button for New Trip moved above the future reservations -->\r\n    <div class=\"row\">\r\n        <div class=\"col-12 col-md-8\">\r\n            <div class=\"mt-3\">\r\n                <a href=\"add_trip.php\" class=\"btn btn-primary\">Add a New Trip</a>\r\n            </div>\r\n            <h4 class=\"mt-3\">Future reservations</h4>\r\n            <?php \r\n            $futureReservations = getCurrentUserFutureReservations();\r\n            if (count($futureReservations) == 0) {\r\n                echo \"No upcoming reservations\";\r\n            } else {\r\n            ?>\r\n            <table class=\"table table-bordered\">\r\n                <thead class=\"thead-dark\">\r\n                    <tr>\r\n                        <th scope=\"col\">#</th>\r\n                        <th scope=\"col\">Date</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <?php\r\n                    foreach ($futureReservations as $index => $reservation) {\r\n                        $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';\r\n                        echo(\"<tr><td>\".($index+1).\"</td><td>\".explode(\" \",$reservationDate)[0].\"</td></tr>\");\r\n                    }\r\n                    ?>\r\n                </tbody>\r\n            </table>\r\n            <?php } ?>\r\n        </div>\r\n\r\n        <div class=\"col-12 col-md-8\" style=\"margin-top: 30px;\">\r\n            <h4 class=\"mt-3\">Previous reservations</h4>\r\n            <?php \r\n            $previousReservations = getCurrentUserPreviousReservations();\r\n            if (count($previousReservations) == 0) {\r\n                echo \"No planned reservations\";\r\n            } else {\r\n            ?>\r\n            <table class=\"table table-bordered\">\r\n                <thead class=\"thead-dark\">\r\n                    <tr>\r\n                        <th scope=\"col\">#</th>\r\n                        <th scope=\"col\">Date</th>\r\n                        <th scope=\"col\">Feedback</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <?php\r\n                    foreach ($previousReservations as $index => $reservation) {\r\n                        $reservationDate = isset($reservation['reservation_date']) ? $reservation['reservation_date'] : 'N/A';\r\n                        $reservationId = $reservation['reservation_id']; \r\n                        echo(\"<td>\".($index+1).\"</td>\");\r\n                        echo(\"<td>\".explode(\" \",$reservationDate)[0].\"</td>\");\r\n                    \r\n                        echo(\"<td><a href='view/feedback_form.php?reservation_id=\".$reservation['reservation_id'].\"' class='btn btn-primary'>Add Feedback</a></td>\");\r\n                        echo(\"</tr>\");\r\n                    }\r\n                    ?>\r\n                </tbody>\r\n            </table>\r\n            <?php } ?>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<?php \r\ninclude_once __DIR__.'/common/footer.php' \r\n?>\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/view/dashboard.php b/view/dashboard.php
+--- a/view/dashboard.php	(revision df09cd02f7c69a1fd761fd546cd739db43e42168)
++++ b/view/dashboard.php	(date 1731245334929)
+@@ -39,7 +39,6 @@
+         </div>
+     </div>
+ 
+-    <!-- Button for New Trip moved above the future reservations -->
+     <div class="row">
+         <div class="col-12 col-md-8">
+             <div class="mt-3">
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"960c8fbc-3126-4214-8ef0-6aaa99f69390\" name=\"Changes\" comment=\"add trip v1\">\r\n      <change afterPath=\"$PROJECT_DIR$/controller/trip/db_functions.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/controller/c_databaseInitialisation.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/controller/c_databaseInitialisation.php\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;history&quot;: [\r\n    {\r\n      &quot;assignee&quot;: &quot;a-cheramat&quot;\r\n    }\r\n  ],\r\n  &quot;lastFilter&quot;: {\r\n    &quot;assignee&quot;: &quot;a-cheramat&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/francoisandre/utbmTravelAgency.git&quot;,\r\n    &quot;accountId&quot;: &quot;0ef8e226-46ee-442c-bfc2-1c1694150181&quot;\r\n  }\r\n}</component>\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"PHP\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2oIcCgVBg1AF9RaaL0bRAyCXmOI\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;JavaScript Debug.add_trip.php.executor&quot;: &quot;Run&quot;,\r\n    &quot;JavaScript Debug.get_options_by_package.php.executor&quot;: &quot;Run&quot;,\r\n    &quot;PHP Script.c_databaseInitialisation.php.executor&quot;: &quot;Run&quot;,\r\n    &quot;PHP Script.dashboard.php.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/user&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  },\r\n  &quot;keyToStringList&quot;: {\r\n    &quot;DatabaseDriversLRU&quot;: [\r\n      &quot;mysql&quot;\r\n    ]\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23339.16\" />\r\n        <option value=\"bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23339.16\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"960c8fbc-3126-4214-8ef0-6aaa99f69390\" name=\"Changes\" comment=\"\" />\r\n      <created>1730560404319</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1730560404319</updated>\r\n      <workItem from=\"1730560405368\" duration=\"3413000\" />\r\n      <workItem from=\"1730571853372\" duration=\"193000\" />\r\n      <workItem from=\"1730572075431\" duration=\"15000\" />\r\n      <workItem from=\"1730572092060\" duration=\"1722000\" />\r\n      <workItem from=\"1730579246352\" duration=\"860000\" />\r\n      <workItem from=\"1730591880261\" duration=\"1627000\" />\r\n      <workItem from=\"1730593990803\" duration=\"417000\" />\r\n      <workItem from=\"1730630600309\" duration=\"3212000\" />\r\n      <workItem from=\"1730633845845\" duration=\"107000\" />\r\n      <workItem from=\"1730633964782\" duration=\"9390000\" />\r\n      <workItem from=\"1731160361430\" duration=\"18955000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"add trip v1\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731175681794</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731175681794</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"test\" />\r\n    <MESSAGE value=\"add trip v1\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"add trip v1\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"php\">\r\n          <url>file://$PROJECT_DIR$/view/dashboard.php</url>\r\n          <line>8</line>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision df09cd02f7c69a1fd761fd546cd739db43e42168)
++++ b/.idea/workspace.xml	(date 1731245097468)
+@@ -4,10 +4,8 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="add trip v1">
+-      <change afterPath="$PROJECT_DIR$/controller/trip/db_functions.php" afterDir="false" />
++    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="add trip v2">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/controller/c_databaseInitialisation.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/c_databaseInitialisation.php" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -93,7 +91,9 @@
+       <workItem from="1730630600309" duration="3212000" />
+       <workItem from="1730633845845" duration="107000" />
+       <workItem from="1730633964782" duration="9390000" />
+-      <workItem from="1731160361430" duration="18955000" />
++      <workItem from="1731160361430" duration="19304000" />
++      <workItem from="1731180039757" duration="110000" />
++      <workItem from="1731244744552" duration="351000" />
+     </task>
+     <task id="LOCAL-00001" summary="add trip v1">
+       <option name="closed" value="true" />
+@@ -103,7 +103,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1731175681794</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="add trip v2">
++      <option name="closed" value="true" />
++      <created>1731179873539</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1731179873539</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -123,7 +131,8 @@
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="test" />
+     <MESSAGE value="add trip v1" />
+-    <option name="LAST_COMMIT_MESSAGE" value="add trip v1" />
++    <MESSAGE value="add trip v2" />
++    <option name="LAST_COMMIT_MESSAGE" value="add trip v2" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>

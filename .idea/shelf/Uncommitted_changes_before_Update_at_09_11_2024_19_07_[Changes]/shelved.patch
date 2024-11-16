@@ -1,0 +1,489 @@
+Index: controller/get_options_by_package.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/get_options_by_package.php b/controller/get_options_by_package.php
+new file mode 100644
+--- /dev/null	(date 1731172734750)
++++ b/controller/get_options_by_package.php	(date 1731172734750)
+@@ -0,0 +1,32 @@
++<?php
++header('Content-Type: application/json');
++include_once __DIR__.'/../db/dbConnection.php';
++
++if (!isset($_POST['package_type'])) {
++    echo json_encode(['error' => 'Package type not set']);
++    exit;
++}
++
++$package_type = $_POST['package_type'];
++
++try {
++    $conn = getDatabase();
++
++    // Récupère les hébergements associés au package
++    $stmt = $conn->prepare("SELECT DISTINCT accommodation_type FROM accommodations JOIN travelpackages ON accommodations.package_id = travelpackages.package_id WHERE travelpackages.package_name = ?");
++    $stmt->execute([$package_type]);
++    $accommodations = $stmt->fetchAll(PDO::FETCH_COLUMN);
++
++    // Récupère les transports associés au package
++    $stmt = $conn->prepare("SELECT DISTINCT mode_of_transport FROM transportation JOIN travelpackages ON transportation.package_id = travelpackages.package_id WHERE travelpackages.package_name = ?");
++    $stmt->execute([$package_type]);
++    $transportation = $stmt->fetchAll(PDO::FETCH_COLUMN);
++
++    echo json_encode([
++        'accommodations' => $accommodations,
++        'transportation' => $transportation
++    ]);
++} catch (PDOException $e) {
++    echo json_encode(['error' => 'Failed to fetch options: ' . $e->getMessage()]);
++}
++?>
+Index: test_connection.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test_connection.php b/test_connection.php
+new file mode 100644
+--- /dev/null	(date 1731170933483)
++++ b/test_connection.php	(date 1731170933483)
+@@ -0,0 +1,9 @@
++<?php
++include_once 'util/db_connection.php';
++
++try {
++    $conn = getDatabase();
++    echo "Database connection successful with PDO!";
++} catch (PDOException $e) {
++    echo "Database connection failed: " . $e->getMessage();
++}
+Index: controller/fake/c_fakeTransportation.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/fake/c_fakeTransportation.php b/controller/fake/c_fakeTransportation.php
+new file mode 100644
+--- /dev/null	(date 1731168699374)
++++ b/controller/fake/c_fakeTransportation.php	(date 1731168699374)
+@@ -0,0 +1,34 @@
++<?php
++include_once __DIR__.'/../../view/common/session.php';
++include_once __DIR__.'/../../db/dbConnection.php';
++
++function createTransportationIfNotExisting($packageId, $modeOfTransport, $details) {
++    global $conn;
++    $stmt = $conn->prepare("SELECT * FROM transportation WHERE package_id = ? AND mode_of_transport = ?");
++    $stmt->bind_param("is", $packageId, $modeOfTransport);
++    $stmt->execute();
++
++    if ($stmt->get_result()->num_rows === 0) {
++        $stmt = $conn->prepare("INSERT INTO transportation (package_id, mode_of_transport, details) VALUES (?, ?, ?)");
++        $stmt->bind_param("iss", $packageId, $modeOfTransport, $details);
++        $stmt->execute();
++    }
++}
++
++// Vérifie que l'utilisateur est un administrateur avant d'ajouter des données fictives
++goToLoginIfNotAdmin();
++
++try {
++    createTransportationIfNotExisting(1, 'airplane', 'Vol en classe affaires');
++    createTransportationIfNotExisting(1, 'car_rental', 'Voiture de luxe avec chauffeur');
++    createTransportationIfNotExisting(2, 'train', 'Train direct');
++    createTransportationIfNotExisting(3, 'bus', 'Bus de transport local');
++} catch (Exception $e) {
++    $_GET['errorMessage'] = "Une erreur est survenue lors de la création des moyens de transport";
++    include __DIR__.'/../../view/transportation.php';
++    exit();
++}
++
++$_GET['successMessage'] = "Les moyens de transport fictifs ont été créés";
++include __DIR__.'/../../view/transportation.php';
++?>
+Index: controller/fake/c_fakeAccommodations.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/fake/c_fakeAccommodations.php b/controller/fake/c_fakeAccommodations.php
+new file mode 100644
+--- /dev/null	(date 1731168689802)
++++ b/controller/fake/c_fakeAccommodations.php	(date 1731168689802)
+@@ -0,0 +1,33 @@
++<?php
++include_once __DIR__.'/../../view/common/session.php';
++include_once __DIR__.'/../../db/dbConnection.php';
++
++function createAccommodationIfNotExisting($packageId, $accommodationType, $roomType, $amenities, $checkInDate, $checkOutDate) {
++    global $conn;
++    $stmt = $conn->prepare("SELECT * FROM accommodations WHERE package_id = ? AND accommodation_type = ?");
++    $stmt->bind_param("is", $packageId, $accommodationType);
++    $stmt->execute();
++
++    if ($stmt->get_result()->num_rows === 0) {
++        $stmt = $conn->prepare("INSERT INTO accommodations (package_id, accommodation_type, room_type, amenities, check_in_date, check_out_date) VALUES (?, ?, ?, ?, ?, ?)");
++        $stmt->bind_param("isssss", $packageId, $accommodationType, $roomType, $amenities, $checkInDate, $checkOutDate);
++        $stmt->execute();
++    }
++}
++
++// Vérifie que l'utilisateur est un administrateur avant d'ajouter des données fictives
++goToLoginIfNotAdmin();
++
++try {
++    createAccommodationIfNotExisting(1, 'hotel', 'Suite', 'Piscine, Spa, Wi-Fi gratuit', '2024-11-01', '2024-11-08');
++    createAccommodationIfNotExisting(2, 'hostel', 'Chambre partagée', 'Wi-Fi gratuit', '2024-11-03', '2024-11-08');
++    createAccommodationIfNotExisting(3, 'camping', 'Tente', 'Équipements de survie inclus', '2024-11-05', '2024-11-15');
++} catch (Exception $e) {
++    $_GET['errorMessage'] = "Une erreur est survenue lors de la création des hébergements";
++    include __DIR__.'/../../view/accommodations.php';
++    exit();
++}
++
++$_GET['successMessage'] = "Les hébergements fictifs ont été créés";
++include __DIR__.'/../../view/accommodations.php';
++?>
+Index: config.ini
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[database]\r\nhost = \"localhost\"\r\nusername = \"root\"\r\npassword = \"\"\r\ndbname = \"utbmTravelAgency\"
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config.ini b/config.ini
+--- a/config.ini	(revision fdac3559a9600eabb8c433f1dbec836acdad6d76)
++++ b/config.ini	(date 1731169777576)
+@@ -2,4 +2,4 @@
+ host = "localhost"
+ username = "root"
+ password = ""
+-dbname = "utbmTravelAgency"
+\ No newline at end of file
++dbname = "utbmtravelagency"
+\ No newline at end of file
+Index: view/add_trip.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\ninclude_once __DIR__.'/common/session.php';\r\ninclude_once __DIR__.'/../util/reservationUtils.php';\r\ngoToLoginIfNotConnected();\r\n?>\r\n<html lang=\"en\">\r\n<?php include_once __DIR__.'/common/header.php'; ?>\r\n<body>\r\n<?php\r\n$currentActiveMenu = \"add_trip\";\r\ninclude_once __DIR__.'/common/menu.php';\r\n?>\r\n<div class=\"container mt-4\">\r\n    <h2>Ajouter un Nouveau Voyage</h2>\r\n\r\n    <!-- Formulaire pour ajouter un voyage -->\r\n    <form action=\"process_add_trip.php\" method=\"POST\">\r\n        <div class=\"form-group\">\r\n            <label for=\"destination\">Destination</label>\r\n            <input type=\"text\" class=\"form-control\" id=\"destination\" name=\"destination\" required>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"start_date\">Date de départ</label>\r\n            <input type=\"date\" class=\"form-control\" id=\"start_date\" name=\"start_date\" required>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"end_date\">Date de retour</label>\r\n            <input type=\"date\" class=\"form-control\" id=\"end_date\" name=\"end_date\" required>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label for=\"price\">Prix</label>\r\n            <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\" required>\r\n        </div>\r\n        <!-- Ajouter d'autres champs selon les besoins (type de package, hébergement, etc.) -->\r\n        <button type=\"submit\" class=\"btn btn-success mt-3\">Save the Trip</button>\r\n    </form>\r\n</div>\r\n\r\n<?php include_once __DIR__.'/common/footer.php'; ?>\r\n</body>\r\n</html>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/view/add_trip.php b/view/add_trip.php
+--- a/view/add_trip.php	(revision fdac3559a9600eabb8c433f1dbec836acdad6d76)
++++ b/view/add_trip.php	(date 1731172685258)
+@@ -1,42 +1,136 @@
+ <?php
++include_once __DIR__.'/../db/dbConnection.php';
+ include_once __DIR__.'/common/session.php';
+-include_once __DIR__.'/../util/reservationUtils.php';
+-goToLoginIfNotConnected();
+-?>
+-<html lang="en">
+-<?php include_once __DIR__.'/common/header.php'; ?>
+-<body>
+-<?php
++include_once __DIR__.'/common/header.php';
+ $currentActiveMenu = "add_trip";
+ include_once __DIR__.'/common/menu.php';
+ ?>
++
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Add Trip</title>
++    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
++</head>
++<body>
+ <div class="container mt-4">
+-    <h2>Ajouter un Nouveau Voyage</h2>
++    <h2>Add a New Trip</h2>
+ 
+     <!-- Formulaire pour ajouter un voyage -->
+     <form action="process_add_trip.php" method="POST">
++        <!-- Menu déroulant pour sélectionner la destination -->
+         <div class="form-group">
+             <label for="destination">Destination</label>
+-            <input type="text" class="form-control" id="destination" name="destination" required>
++            <select class="form-control" id="destination" name="destination" required>
++                <option value="" disabled selected>Select Destination</option>
++            </select>
+         </div>
++
++        <!-- Sélection du type de package -->
+         <div class="form-group">
+-            <label for="start_date">Date de départ</label>
+-            <input type="date" class="form-control" id="start_date" name="start_date" required>
++            <label for="package_type">Package Type</label>
++            <select class="form-control" id="package_type" name="package_type" required onchange="fetchOptionsByPackage()">
++                <option value="" disabled selected>Select Package Type</option>
++                <option value="vacation">Vacation</option>
++                <option value="adventure">Adventure</option>
++                <option value="business">Business</option>
++                <option value="luxe">Luxury</option>
++            </select>
+         </div>
++
++        <!-- Hébergement (dynamique) -->
+         <div class="form-group">
+-            <label for="end_date">Date de retour</label>
+-            <input type="date" class="form-control" id="end_date" name="end_date" required>
++            <label for="accommodation">Accommodation</label>
++            <select class="form-control" id="accommodation" name="accommodation" required>
++                <option value="" disabled selected>Select Accommodation</option>
++            </select>
++        </div>
++
++        <!-- Transport (dynamique) -->
++        <div class="form-group">
++            <label for="transportation">Transport</label>
++            <select class="form-control" id="transportation" name="transportation" required>
++                <option value="" disabled selected>Select Transport</option>
++            </select>
++        </div>
++
++        <!-- Date de début et date de fin -->
++        <div class="form-group">
++            <label for="start_date">Start Date</label>
++            <input type="date" class="form-control" id="start_date" name="start_date" required>
+         </div>
++
+         <div class="form-group">
+-            <label for="price">Prix</label>
+-            <input type="number" class="form-control" id="price" name="price" required>
++            <label for="end_date">End Date</label>
++            <input type="date" class="form-control" id="end_date" name="end_date" required>
+         </div>
+-        <!-- Ajouter d'autres champs selon les besoins (type de package, hébergement, etc.) -->
++
+         <button type="submit" class="btn btn-success mt-3">Save the Trip</button>
+     </form>
+ </div>
+ 
+-<?php include_once __DIR__.'/common/footer.php'; ?>
++<script>
++    // Charger les destinations
++    document.addEventListener('DOMContentLoaded', () => {
++        const destinationSelect = document.getElementById("destination");
++
++        fetch('../controller/get_destinations.php')
++            .then(response => response.json())
++            .then(data => {
++                if (data.error) {
++                    console.error('Error:', data.error);
++                } else {
++                    data.forEach(destination => {
++                        const option = document.createElement("option");
++                        option.value = destination;
++                        option.textContent = destination;
++                        destinationSelect.appendChild(option);
++                    });
++                }
++            })
++            .catch(error => console.error('Error fetching destinations:', error));
++    });
++
++    // Charger les options d'hébergement et de transport en fonction du package
++    function fetchOptionsByPackage() {
++        const packageType = document.getElementById("package_type").value;
++        const accommodationSelect = document.getElementById("accommodation");
++        const transportationSelect = document.getElementById("transportation");
++
++        accommodationSelect.innerHTML = '<option value="" disabled selected>Select Accommodation</option>';
++        transportationSelect.innerHTML = '<option value="" disabled selected>Select Transport</option>';
++
++        fetch('../controller/get_options_by_package.php', {
++            method: 'POST',
++            headers: {
++                'Content-Type': 'application/x-www-form-urlencoded'
++            },
++            body: 'package_type=' + encodeURIComponent(packageType)
++        })
++            .then(response => response.json())
++            .then(data => {
++                if (data.accommodations && data.transportation) {
++                    data.accommodations.forEach(accommodation => {
++                        const option = document.createElement("option");
++                        option.value = accommodation;
++                        option.textContent = accommodation;
++                        accommodationSelect.appendChild(option);
++                    });
++                    data.transportation.forEach(transport => {
++                        const option = document.createElement("option");
++                        option.value = transport;
++                        option.textContent = transport;
++                        transportationSelect.appendChild(option);
++                    });
++                } else {
++                    console.error("Error: Missing accommodation or transport data");
++                }
++            })
++            .catch(error => console.error('Error fetching options by package:', error));
++    }
++</script>
++
+ </body>
+ </html>
+-
+Index: controller/get_destinations.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/get_destinations.php b/controller/get_destinations.php
+new file mode 100644
+--- /dev/null	(date 1731172520749)
++++ b/controller/get_destinations.php	(date 1731172520749)
+@@ -0,0 +1,18 @@
++<?php
++header('Content-Type: application/json');
++include_once __DIR__.'/../db/dbConnection.php';
++
++try {
++    // Connexion à la base de données
++    $conn = getDatabase();
++
++    // Récupère les destinations uniques depuis la table travelpackages
++    $stmt = $conn->query("SELECT DISTINCT destination FROM travelpackages");
++    $destinations = $stmt->fetchAll(PDO::FETCH_COLUMN);
++
++    // Renvoie les destinations en format JSON
++    echo json_encode($destinations);
++} catch (PDOException $e) {
++    echo json_encode(['error' => 'Failed to fetch destinations: ' . $e->getMessage()]);
++}
++?>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"960c8fbc-3126-4214-8ef0-6aaa99f69390\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/.gitignore\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/dataSources.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/php.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/sqldialects.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/utbmTravelAgency.iml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/vcs.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.vscode/launch.json\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/util/addNewTrip.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/util/addNewTrip.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/util/process_add_trip.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/util/process_add_trip.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/util/reservationUtils.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/util/reservationUtils.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/view/add_trip.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/view/add_trip.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/view/dashboard.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/view/dashboard.php\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"PHP\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2oIcCgVBg1AF9RaaL0bRAyCXmOI\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;PHP Script.c_databaseInitialisation.php.executor&quot;: &quot;Run&quot;,\r\n    &quot;PHP Script.dashboard.php.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/user&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  },\r\n  &quot;keyToStringList&quot;: {\r\n    &quot;DatabaseDriversLRU&quot;: [\r\n      &quot;mysql&quot;\r\n    ]\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PS-242.23339.16\" />\r\n        <option value=\"bundled-php-predefined-a98d8de5180a-90914f2295cb-com.jetbrains.php.sharedIndexes-PS-242.23339.16\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"960c8fbc-3126-4214-8ef0-6aaa99f69390\" name=\"Changes\" comment=\"\" />\r\n      <created>1730560404319</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1730560404319</updated>\r\n      <workItem from=\"1730560405368\" duration=\"3413000\" />\r\n      <workItem from=\"1730571853372\" duration=\"193000\" />\r\n      <workItem from=\"1730572075431\" duration=\"15000\" />\r\n      <workItem from=\"1730572092060\" duration=\"1722000\" />\r\n      <workItem from=\"1730579246352\" duration=\"860000\" />\r\n      <workItem from=\"1730591880261\" duration=\"1627000\" />\r\n      <workItem from=\"1730593990803\" duration=\"417000\" />\r\n      <workItem from=\"1730630600309\" duration=\"3212000\" />\r\n      <workItem from=\"1730633845845\" duration=\"107000\" />\r\n      <workItem from=\"1730633964782\" duration=\"9390000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"php\">\r\n          <url>file://$PROJECT_DIR$/view/dashboard.php</url>\r\n          <line>8</line>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision fdac3559a9600eabb8c433f1dbec836acdad6d76)
++++ b/.idea/workspace.xml	(date 1731175507838)
+@@ -5,19 +5,14 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/utbmTravelAgency.iml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/util/addNewTrip.php" beforeDir="false" afterPath="$PROJECT_DIR$/util/addNewTrip.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/util/process_add_trip.php" beforeDir="false" afterPath="$PROJECT_DIR$/util/process_add_trip.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/util/reservationUtils.php" beforeDir="false" afterPath="$PROJECT_DIR$/util/reservationUtils.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/controller/fake/c_fakeAccommodations.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/controller/fake/c_fakeTransportation.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/controller/get_destinations.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/controller/get_options_by_package.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/test_connection.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/view/add_trip.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/add_trip.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/view/dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/dashboard.php" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -30,6 +25,22 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "history": [
++    {
++      "assignee": "a-cheramat"
++    }
++  ],
++  "lastFilter": {
++    "assignee": "a-cheramat"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/francoisandre/utbmTravelAgency.git",
++    "accountId": "0ef8e226-46ee-442c-bfc2-1c1694150181"
++  }
++}]]></component>
+   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 3
+@@ -39,26 +50,28 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;PHP Script.c_databaseInitialisation.php.executor&quot;: &quot;Run&quot;,
+-    &quot;PHP Script.dashboard.php.executor&quot;: &quot;Run&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "JavaScript Debug.add_trip.php.executor": "Run",
++    "JavaScript Debug.get_options_by_package.php.executor": "Run",
++    "PHP Script.c_databaseInitialisation.php.executor": "Run",
++    "PHP Script.dashboard.php.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "main",
++    "last_opened_file_path": "C:/Users/user",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "vue.rearranger.settings.migration": "true"
+   },
+-  &quot;keyToStringList&quot;: {
+-    &quot;DatabaseDriversLRU&quot;: [
+-      &quot;mysql&quot;
++  "keyToStringList": {
++    "DatabaseDriversLRU": [
++      "mysql"
+     ]
+   }
+-}</component>
++}]]></component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -85,11 +98,23 @@
+       <workItem from="1730630600309" duration="3212000" />
+       <workItem from="1730633845845" duration="107000" />
+       <workItem from="1730633964782" duration="9390000" />
++      <workItem from="1731160361430" duration="14820000" />
+     </task>
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>

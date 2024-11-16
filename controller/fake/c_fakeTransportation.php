@@ -15,7 +15,7 @@ function createTransportationIfNotExisting($packageId, $modeOfTransport, $detail
     }
 }
 
-
+// Check if the user is an administrator before adding mock data
 goToLoginIfNotAdmin();
 
 try {

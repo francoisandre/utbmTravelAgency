@@ -1,10 +1,11 @@
 <?php
 include_once __DIR__.'/../db/dbConnection.php';
-include_once __DIR__.'/trip/db_functions.php';
+include_once __DIR__.'/trip/db_functions.php'; // Adjusted path for db_functions.php
 include_once __DIR__.'/../util/userUtils.php';
 include_once __DIR__.'/../util/loyaltyProgramUtils.php';
 
 try {
+    // Connect to the database
     $pdo = getDatabase();
 
    
@@ -33,6 +34,7 @@ try {
     createUser("jad@gmail.com", "utbm", "Jad", "KAHLAOUI", "07793558", true);
     echo "Administrators added successfully.<br/>";
 
+    // Adding test data for packages
     $packageIdVacation = addPackage('vacation', 'Paris', 7, 1200.00, 'Itinerary for Paris trip');
     addAccommodation($packageIdVacation, 'hotel', 'single', 'Wi-Fi, Pool, Gym', '2024-10-01', '2024-10-08');
     addTransportation($packageIdVacation, 'airplane', 'Round-trip economy class flight');

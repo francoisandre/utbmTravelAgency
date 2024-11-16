@@ -10,10 +10,11 @@ ini_set('display_errors', 1);
 echo "Début du script<br>"; 
 
 
+// Check the POST method
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "Méthode POST confirmée<br>";
 
-    
+    // Validate the POST data
     if (!isset($_POST['id_booking'])) {
         echo "The reservation ID is missing.";
         exit();
@@ -40,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-   
+    // Check that the `reservation_id` exists in the `reservations` table
     $sqlCheck = "SELECT COUNT(*) FROM reservations WHERE reservation_id = ?";
     $stmtCheck = $db->prepare($sqlCheck);
     $stmtCheck->execute([$reservation_id]);
@@ -65,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     } else {
-        
+        // Display the PDO error
         $errorInfo = $stmt->errorInfo();
         echo "Erreur PDO : " . $errorInfo[2];
     }

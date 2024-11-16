@@ -29,13 +29,14 @@ function getCurrentUserReservation($userId) {
 
 function deleteFeedback($feedbackId) {
     $db = getDatabase();
-    
+
+    // Check if the feedback exists before attempting to delete it
     $req = $db->prepare("SELECT * FROM feedback WHERE feedback_id = ?");
     $req->execute([$feedbackId]);
     $data = $req->fetch();
     
     if ($data) {
-       
+        // Delete the feedback from the database
         $req = $db->prepare("DELETE FROM feedback WHERE feedback_id = ?");
         $req->execute([$feedbackId]);
     } else {

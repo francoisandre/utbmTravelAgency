@@ -47,7 +47,6 @@ include_once __DIR__.'/common/menu.php';
                     echo "<td>" . htmlspecialchars($package['price']) . "</td>";
                     echo "<td>" . htmlspecialchars($package['itinerary']) . "</td>";
                     echo "<td>";
-                    // Modifier les liens pour envoyer packageId dans l'URL
                     echo "<a href='".getBaseUrl()."controller/packages/c_editPackages.php?packageId=".$package['package_id']."' style='cursor:pointer'><i title='Edit' class='material-icons' style='color: green;'>edit</i></a>&nbsp;";
                     echo "<a href='".getBaseUrl()."controller/packages/c_deletePackages.php?packageId=".$package['package_id']."' onclick='return confirmDelete();' style='cursor:pointer'><i title='Delete' class='material-icons' style='color: red;'>delete</i></a>";
                     echo "</td>";

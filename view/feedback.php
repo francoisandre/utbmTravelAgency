@@ -21,7 +21,7 @@ include_once 'common/menu.php';
 
 <div class="container mt-4">
     <h2>Feedback <?php echo $_SESSION['feedbackEditionMode'] ?>: </h2>
-    <!-- Formulaire pour l'édition ou la création de feedback -->
+
     <form method="post" action="<?php echo getBaseUrl()?>controller/feedback/c_saveFeedback.php">
 
     <select class="form-select" id="rating" name="rating">

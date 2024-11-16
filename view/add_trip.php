@@ -3,7 +3,6 @@ include_once __DIR__.'/../db/dbConnection.php';
 include_once __DIR__.'/common/session.php';
 include_once __DIR__.'/../util/userUtils.php';
 
-// Restreindre l'accès aux utilisateurs connectés uniquement
 goToLoginIfNotConnected();
 
 include_once __DIR__.'/common/header.php';
@@ -23,9 +22,8 @@ include_once __DIR__.'/common/menu.php';
 <div class="container mt-4">
     <h2>Add a New Trip</h2>
 
-    <!-- Formulaire pour ajouter un voyage -->
     <form action="../controller/process_add_trip.php" method="POST">
-        <!-- Menu déroulant pour sélectionner la destination -->
+       
         <div class="form-group">
             <label for="destination">Destination</label>
             <select class="form-control" id="destination" name="destination" required>
@@ -33,7 +31,7 @@ include_once __DIR__.'/common/menu.php';
             </select>
         </div>
 
-        <!-- Sélection du type de package -->
+      
         <div class="form-group">
             <label for="package_type">Package Type</label>
             <select class="form-control" id="package_type" name="package_type" required onchange="fetchOptionsByPackage()">
@@ -45,7 +43,7 @@ include_once __DIR__.'/common/menu.php';
             </select>
         </div>
 
-        <!-- Hébergement (dynamique) -->
+       
         <div class="form-group">
             <label for="accommodation">Accommodation</label>
             <select class="form-control" id="accommodation" name="accommodation" required>
@@ -53,7 +51,7 @@ include_once __DIR__.'/common/menu.php';
             </select>
         </div>
 
-        <!-- Transport (dynamique) -->
+       
         <div class="form-group">
             <label for="transportation">Transport</label>
             <select class="form-control" id="transportation" name="transportation" required>
@@ -61,7 +59,6 @@ include_once __DIR__.'/common/menu.php';
             </select>
         </div>
 
-        <!-- Date de début et date de fin -->
         <div class="form-group">
             <label for="start_date">Start Date</label>
             <input type="date" class="form-control" id="start_date" name="start_date" required>
@@ -72,7 +69,7 @@ include_once __DIR__.'/common/menu.php';
             <input type="date" class="form-control" id="end_date" name="end_date" required>
         </div>
 
-        <!-- Champ pour le nombre de voyageurs -->
+       
         <div class="form-group">
             <label for="number_of_travelers">Number of Travelers</label>
             <input type="number" class="form-control" id="number_of_travelers" name="number_of_travelers" min="1" required>
@@ -83,7 +80,7 @@ include_once __DIR__.'/common/menu.php';
 </div>
 
 <script>
-    // Charger les destinations
+ 
     document.addEventListener('DOMContentLoaded', () => {
         const destinationSelect = document.getElementById("destination");
 
@@ -104,7 +101,7 @@ include_once __DIR__.'/common/menu.php';
             .catch(error => console.error('Error fetching destinations:', error));
     });
 
-    // Charger les options d'hébergement et de transport en fonction du package
+  
     function fetchOptionsByPackage() {
         const packageType = document.getElementById("package_type").value;
         const accommodationSelect = document.getElementById("accommodation");

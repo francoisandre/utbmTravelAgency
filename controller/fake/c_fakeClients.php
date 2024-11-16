@@ -18,11 +18,11 @@ try {
     createClientIfNotExisting("ringo@beatles.com", "ringo", "Ringo", "Starr", "0400000000");
 }
 catch (Exception $e) {
-    $_GET['errorMessage']="Une erreur est survenue";
+    $_GET['errorMessage']="An error has occurred";
     include __DIR__.'/../../view/clients.php';
     exit();
 }
-$_GET['successMessage']="Les clients ont été créés";
+$_GET['successMessage']="Clients have been created";
     include __DIR__.'/../../view/clients.php';
 
 ?>

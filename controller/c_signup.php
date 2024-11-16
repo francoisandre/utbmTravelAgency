@@ -2,7 +2,7 @@
 include_once __DIR__.'/../view/common/session.php';
 include_once __DIR__.'/../db/dbConnection.php';
 include_once __DIR__.'/../util/userUtils.php';
-// On vérifie que les infos ont été fournies
+
 if(!isset($_POST["email"])) {
     $_GET['errorMessage']="Email is mandatory";
     include __DIR__.'/../view/signup.php';

@@ -1,8 +1,8 @@
 <?php
-include_once __DIR__.'/../../view/common/session.php';  // Assurez-vous que les sessions sont bien gérées
-include_once __DIR__.'/../../db/dbConnection.php';  // Connexion à la base de données
-include_once __DIR__.'/../../util/packageUtils.php';  // Utilitaires pour la gestion des packages
-include_once __DIR__.'/../../util/userUtils.php';  // Utilitaires pour la gestion des utilisateurs
+include_once __DIR__.'/../../view/common/session.php'; 
+include_once __DIR__.'/../../db/dbConnection.php';
+include_once __DIR__.'/../../util/packageUtils.php';  
+include_once __DIR__.'/../../util/userUtils.php';  
 goToLoginIfNotAdmin();
 
 if(!isset($_SESSION['editedPackage'])) {

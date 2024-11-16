@@ -6,7 +6,7 @@ include_once __DIR__.'/../../util/userUtils.php';
 
 goToLoginIfNotAdmin();
 
-// On vérifie que les infos ont été fournies
+
 if (!isset($_GET["email"])) {
     $_GET['errorMessage']="Email argument is missing";
     include __DIR__.'/../../view/clients.php';

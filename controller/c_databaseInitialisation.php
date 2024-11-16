@@ -1,14 +1,13 @@
 <?php
 include_once __DIR__.'/../db/dbConnection.php';
-include_once __DIR__.'/trip/db_functions.php'; // Chemin ajusté pour db_functions.php
+include_once __DIR__.'/trip/db_functions.php';
 include_once __DIR__.'/../util/userUtils.php';
 include_once __DIR__.'/../util/loyaltyProgramUtils.php';
 
 try {
-    // Connexion à la base de données
     $pdo = getDatabase();
 
-    // Exécution du fichier SQL pour créer les tables
+   
     $sqlFile = '../sql/travel_agency.sql';
     $sql = file_get_contents($sqlFile);
     $statements = explode(";", $sql);
@@ -19,23 +18,21 @@ try {
             $pdo->exec($statement);
         }
     }
-    echo "Tables de la base de données créées avec succès.<br/>";
+    echo "Database tables created successfully.<br/>";
 
-    // Création des programmes de fidélité
+    
     createLoyaltyProgram("Bronze", 5, 0, "#CD7F32;");
     createLoyaltyProgram("Silver", 10, 5, "#C0C0C0");
     createLoyaltyProgram("Gold", 15, 15, "#FFD700");
     createLoyaltyProgram("Platinium", 20, 50, "#E5E4E2;");
-    echo "Programmes de fidélité ajoutés avec succès.<br/>";
+    echo "Loyalty programs added successfully.<br/>";
 
-    // Création des utilisateurs administrateurs
-    createUser("francois.andre.perso@gmail.com", "toto", "Francois", "ANDRE", "0622422400", true);
+   
     createUser("alexandre@gmail.com", "utbm", "Alexandre", "ANDRE", "0622422400", true);
     createUser("ayoub@gmail.com", "utbm", "Ayoub", "CHERAMAT", "07793559", true);
     createUser("jad@gmail.com", "utbm", "Jad", "KAHLAOUI", "07793558", true);
-    echo "Administrateurs ajoutés avec succès.<br/>";
+    echo "Administrators added successfully.<br/>";
 
-    // Ajout des données de test pour les packages
     $packageIdVacation = addPackage('vacation', 'Paris', 7, 1200.00, 'Itinerary for Paris trip');
     addAccommodation($packageIdVacation, 'hotel', 'single', 'Wi-Fi, Pool, Gym', '2024-10-01', '2024-10-08');
     addTransportation($packageIdVacation, 'airplane', 'Round-trip economy class flight');
@@ -52,7 +49,7 @@ try {
     addAccommodation($packageIdLuxe, 'resort', 'luxury suite', 'Private Pool, Ocean View, Spa', '2024-12-05', '2024-12-09');
     addTransportation($packageIdLuxe, 'airplane', 'Private jet with luxury amenities');
 
-    echo "Packages, hébergements et transports ajoutés avec succès.";
+    echo "Packages, accommodations and transport added successfully.";
 
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();

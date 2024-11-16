@@ -7,7 +7,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = getCurrentUser();
     if (!$user) {
-        echo "Erreur : l'utilisateur n'est pas connecté.";
+        echo "Error: User is not logged in.";
         exit;
     }
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<a href='../view/dashboard.php' class='btn btn-primary' style='margin-top: 15px;'>Return to Dashboard</a>";
             echo "</div>";
         } else {
-            echo "Erreur : le package sélectionné est introuvable dans la base de données.";
+            echo "Erreur : The selected package was not found in the database.";
         }
 
     } catch (PDOException $e) {

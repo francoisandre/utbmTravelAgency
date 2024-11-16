@@ -15,7 +15,7 @@ function createAccommodationIfNotExisting($packageId, $accommodationType, $roomT
     }
 }
 
-// Vérifie que l'utilisateur est un administrateur avant d'ajouter des données fictives
+
 goToLoginIfNotAdmin();
 
 try {
@@ -23,11 +23,11 @@ try {
     createAccommodationIfNotExisting(2, 'hostel', 'Chambre partagée', 'Wi-Fi gratuit', '2024-11-03', '2024-11-08');
     createAccommodationIfNotExisting(3, 'camping', 'Tente', 'Équipements de survie inclus', '2024-11-05', '2024-11-15');
 } catch (Exception $e) {
-    $_GET['errorMessage'] = "Une erreur est survenue lors de la création des hébergements";
+    $_GET['errorMessage'] = "An error occurred while creating accommodations";
     include __DIR__.'/../../view/accommodations.php';
     exit();
 }
 
-$_GET['successMessage'] = "Les hébergements fictifs ont été créés";
+$_GET['successMessage'] = "Fictitious accommodations have been created";
 include __DIR__.'/../../view/accommodations.php';
 ?>

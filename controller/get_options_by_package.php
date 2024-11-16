@@ -12,12 +12,12 @@ $package_type = $_POST['package_type'];
 try {
     $conn = getDatabase();
 
-    // Récupère les hébergements associés au package
+ 
     $stmt = $conn->prepare("SELECT DISTINCT accommodation_type FROM accommodations JOIN travelpackages ON accommodations.package_id = travelpackages.package_id WHERE travelpackages.package_name = ?");
     $stmt->execute([$package_type]);
     $accommodations = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    // Récupère les transports associés au package
+    
     $stmt = $conn->prepare("SELECT DISTINCT mode_of_transport FROM transportation JOIN travelpackages ON transportation.package_id = travelpackages.package_id WHERE travelpackages.package_name = ?");
     $stmt->execute([$package_type]);
     $transportation = $stmt->fetchAll(PDO::FETCH_COLUMN);

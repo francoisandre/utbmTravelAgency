@@ -209,7 +209,7 @@ include_once __DIR__.'/common/menu.php';
 <script>
     document.querySelectorAll("#refundButton").forEach(button => {
         button.addEventListener("click", function() {
-            // Afficher un message pop-up avec l'adresse email du service client
+            
             alert("If you would like a refund, please contact customer service: travel.agency@utbm.fr");
         });
     });

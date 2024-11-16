@@ -4,9 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="complete version with the deleate">
+    <list default="true" id="960c8fbc-3126-4214-8ef0-6aaa99f69390" name="Changes" comment="commentaire">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/addNewTrip.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/c_databaseInitialisation.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/c_databaseInitialisation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/c_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/c_login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/c_payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/c_payment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/c_signup.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/c_signup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/client/c_deleteClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/client/c_deleteClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/delete_reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/delete_reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/fake/c_fakeAccommodations.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/fake/c_fakeAccommodations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/fake/c_fakeTransportation.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/fake/c_fakeTransportation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/loyaltyProgram/c_deleteLoyaltyProgram.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/loyaltyProgram/c_deleteLoyaltyProgram.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/feedbackUtils.php" beforeDir="false" afterPath="$PROJECT_DIR$/util/feedbackUtils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/pathUtils.php" beforeDir="false" afterPath="$PROJECT_DIR$/util/pathUtils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/reservationUtils.php" beforeDir="false" afterPath="$PROJECT_DIR$/util/reservationUtils.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +113,7 @@
       <workItem from="1731244744552" duration="8034000" />
       <workItem from="1731272044000" duration="2645000" />
       <workItem from="1731529283063" duration="5502000" />
+      <workItem from="1731779481592" duration="1715000" />
     </task>
     <task id="LOCAL-00001" summary="add trip v1">
       <option name="closed" value="true" />
@@ -151,7 +163,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731272472113</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="commentaire">
+      <option name="closed" value="true" />
+      <created>1731779579670</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731779579670</updated>
+    </task>
+    <task id="LOCAL-00008" summary="commentaire">
+      <option name="closed" value="true" />
+      <created>1731779593176</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731779593176</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +204,7 @@
     <MESSAGE value="add trip dans la base de donner avec l'id du client" />
     <MESSAGE value="add tripavec le deleate version complete" />
     <MESSAGE value="complete version with the deleate" />
-    <option name="LAST_COMMIT_MESSAGE" value="complete version with the deleate" />
+    <MESSAGE value="commentaire" />
+    <option name="LAST_COMMIT_MESSAGE" value="commentaire" />
   </component>
 </project>

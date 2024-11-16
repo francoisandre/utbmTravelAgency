@@ -15,7 +15,7 @@ function createAccommodationIfNotExisting($packageId, $accommodationType, $roomT
     }
 }
 
-// Vérifie que l'utilisateur est un administrateur avant d'ajouter des données fictives
+// Verify that the user is an administrator before adding fake data
 goToLoginIfNotAdmin();
 
 try {

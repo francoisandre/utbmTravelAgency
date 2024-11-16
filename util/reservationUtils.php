@@ -7,7 +7,7 @@ function getCurrentUserFutureReservations() {
     $user = getCurrentUser();
     $db = getDatabase();
 
-    // Requête pour récupérer les réservations futures et les statuts de paiement associés
+    // Query to retrieve future bookings and their associated payment statuses
     $req = $db->prepare("
         SELECT r.*, p.payment_status 
         FROM reservations r 
@@ -19,12 +19,12 @@ function getCurrentUserFutureReservations() {
     $req->execute([$user['client_id']]);
     $data = $req->fetchAll(PDO::FETCH_ASSOC);
 
-    // Si aucune donnée n'est retournée, retourner un tableau vide
+    // If no data is returned, return an empty array
     if (empty($data)) {
         return [];
     }
 
-    // Retourner les données des réservations futures
+    // Return the future bookings data
     return $data;
 }
 
@@ -74,7 +74,7 @@ function addNewTrip($destination, $start_date, $end_date, $price) {
     // Connexion à la base de données
     $db = new PDO('mysql:host=localhost;dbname=travel_agency', 'root', '');
 
-    // Prépare et exécute la requête d'insertion
+    // Prepare and execute the insertion query
     $query = $db->prepare("INSERT INTO trips (destination, start_date, end_date, price) VALUES (?, ?, ?, ?)");
     return $query->execute([$destination, $start_date, $end_date, $price]);
 }

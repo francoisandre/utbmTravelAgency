@@ -17,7 +17,7 @@ try {
     $stmt->execute([$package_type]);
     $accommodations = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    // Récupère les transports associés au package
+    // Retrieve the transports associated with the package
     $stmt = $conn->prepare("SELECT DISTINCT mode_of_transport FROM transportation JOIN travelpackages ON transportation.package_id = travelpackages.package_id WHERE travelpackages.package_name = ?");
     $stmt->execute([$package_type]);
     $transportation = $stmt->fetchAll(PDO::FETCH_COLUMN);

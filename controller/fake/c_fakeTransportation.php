@@ -15,7 +15,7 @@ function createTransportationIfNotExisting($packageId, $modeOfTransport, $detail
     }
 }
 
-// Vérifie que l'utilisateur est un administrateur avant d'ajouter des données fictives
+// Check if the user is an administrator before adding mock data
 goToLoginIfNotAdmin();
 
 try {

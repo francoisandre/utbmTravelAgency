@@ -1,11 +1,11 @@
 <?php
 include_once __DIR__.'/../db/dbConnection.php';
-include_once __DIR__.'/trip/db_functions.php'; // Chemin ajusté pour db_functions.php
+include_once __DIR__.'/trip/db_functions.php'; // Adjusted path for db_functions.php
 include_once __DIR__.'/../util/userUtils.php';
 include_once __DIR__.'/../util/loyaltyProgramUtils.php';
 
 try {
-    // Connexion à la base de données
+    // Connect to the database
     $pdo = getDatabase();
 
     // Exécution du fichier SQL pour créer les tables
@@ -28,14 +28,14 @@ try {
     createLoyaltyProgram("Platinium", 20, 50, "#E5E4E2;");
     echo "Programmes de fidélité ajoutés avec succès.<br/>";
 
-    // Création des utilisateurs administrateurs
+    // Creation of administrator users
     createUser("francois.andre.perso@gmail.com", "toto", "Francois", "ANDRE", "0622422400", true);
     createUser("alexandre@gmail.com", "utbm", "Alexandre", "ANDRE", "0622422400", true);
     createUser("ayoub@gmail.com", "utbm", "Ayoub", "CHERAMAT", "07793559", true);
     createUser("jad@gmail.com", "utbm", "Jad", "KAHLAOUI", "07793558", true);
     echo "Administrateurs ajoutés avec succès.<br/>";
 
-    // Ajout des données de test pour les packages
+    // Adding test data for packages
     $packageIdVacation = addPackage('vacation', 'Paris', 7, 1200.00, 'Itinerary for Paris trip');
     addAccommodation($packageIdVacation, 'hotel', 'single', 'Wi-Fi, Pool, Gym', '2024-10-01', '2024-10-08');
     addTransportation($packageIdVacation, 'airplane', 'Round-trip economy class flight');
